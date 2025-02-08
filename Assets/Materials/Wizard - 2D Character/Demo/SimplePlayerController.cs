@@ -18,7 +18,7 @@ namespace ClearSky
         public Transform firePos;
 
         public float TimeBtwFire = 0.2f;
-
+        private float timeBtwFire;
         public float fireballForce;
 
         // Start is called before the first frame update
@@ -33,6 +33,7 @@ namespace ClearSky
             Restart();
             if (alive)
             {
+                RotaleFirePos();
                 Hurt();
                 Die();
                 Attack();
@@ -58,11 +59,11 @@ namespace ClearSky
             {
                 if (moveVelocity.x > 0)
                 {
-                    transform.localScale = new Vector3(1, 1, 0);
+                    transform.localScale = new Vector3(0.5f, 0.5f, 0);
                 }
                 else
                 {
-                    transform.localScale = new Vector3(-1, 1, 0);
+                    transform.localScale = new Vector3(-0.5f, 0.5f, 0);
                 }
             }
             //anim.SetBool("isRun", false);
@@ -112,18 +113,34 @@ namespace ClearSky
         }
         void Attack()
         {
-            if (Input.GetMouseButton(0))
+            timeBtwFire -= Time.deltaTime;
+            if (Input.GetMouseButton(0) && timeBtwFire < 0)
             {
                 anim.SetTrigger("attack");
+
                 FireBall();
             }
         }
 
+        void RotaleFirePos()
+        {
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 lookDir = mousePos - firePos.position;
+            float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg;
+
+            Quaternion rotation = Quaternion.Euler(0, 0, angle);
+            firePos.rotation = rotation;
+
+            if (transform.eulerAngles.z > 90 && transform.eulerAngles.z< 270)
+                firePos.localScale = new Vector3(1, -1, 0);
+            else firePos.localScale = new Vector3(1, 1, 0);
+        }
         void FireBall()
         {
+            timeBtwFire = TimeBtwFire;
             GameObject fireballTmp = Instantiate(fireball, firePos.position, Quaternion.identity);
             Rigidbody2D rb = fireballTmp.GetComponent<Rigidbody2D>();
-            rb.AddForce(transform.right * fireballForce, ForceMode2D.Impulse);
+            rb.AddForce(firePos.right * fireballForce, ForceMode2D.Impulse);
         }
         void Hurt()
         {
