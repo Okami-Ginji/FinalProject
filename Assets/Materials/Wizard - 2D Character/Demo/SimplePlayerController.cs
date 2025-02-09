@@ -21,6 +21,7 @@ namespace ClearSky
         private float timeBtwFire;
         public float fireballForce;
 
+
         // Start is called before the first frame update
         void Start()
         {
@@ -59,11 +60,11 @@ namespace ClearSky
             {
                 if (moveVelocity.x > 0)
                 {
-                    transform.localScale = new Vector3(0.5f, 0.5f, 0);
+                    transform.localScale = new Vector3(0.2f, 0.2f, 0);
                 }
                 else
                 {
-                    transform.localScale = new Vector3(-0.5f, 0.5f, 0);
+                    transform.localScale = new Vector3(-0.2f, 0.2f, 0);
                 }
             }
             //anim.SetBool("isRun", false);
