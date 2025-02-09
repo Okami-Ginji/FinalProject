@@ -2,6 +2,8 @@ using UnityEngine;
 using Pathfinding;
 using ClearSky;
 using System.Collections;
+using UnityEngine.UIElements;
+using Unity.VisualScripting;
 
 public class EnemyAI : MonoBehaviour
 {
@@ -30,16 +32,22 @@ public class EnemyAI : MonoBehaviour
     public float fireballSpeed;
     public float timeBtwfire;
     private float cooldown;
+    public Transform firePos;
+
+    private Animator anim;
+
+    private Vector3 localOffset; 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        InvokeRepeating("CalculatePath", 0f, 0.5f);
-        reachDestination = true;
+        anim = characterSR.GetComponent<Animator>();
+        InvokeRepeating("CalculatePath", 0f, 0.5f);       
+        reachDestination = true;     
     }
 
     // Update is called once per frame
     void Update()
-    {
+    {      
         if (isShootable)
         {
             cooldown -= Time.deltaTime;
@@ -47,7 +55,7 @@ public class EnemyAI : MonoBehaviour
             if (cooldown < 0f)
             {
                 cooldown = timeBtwfire;
-                EnemyShootFireBall();
+                StartCoroutine(EnemyShootFireBall());
             }
         }
         
@@ -79,30 +87,53 @@ public class EnemyAI : MonoBehaviour
 
     IEnumerator MoveToTargetCoroutine()
     {
+        Vector3 localOffset = firePos.transform.localPosition; 
         int currentWP = 0;
-        //reachDestination = false;
+        float stopDistance = 2f;
+        Vector3 playerPos = FindObjectOfType<SimplePlayerController>().transform.position;
         while (currentWP < path.vectorPath.Count)
         {
+           
+            if (Vector2.Distance(transform.position, playerPos) <= stopDistance)
+            {
+                anim.SetBool("isMove",true);
+                yield return null; 
+                continue; 
+            }
+            else anim.SetBool("isMove", false);
+
+
             Vector2 direction = ((Vector2)path.vectorPath[currentWP] - (Vector2)transform.position).normalized;
             Vector2 force = direction * moveSpeed * Time.deltaTime;
             transform.position += (Vector3)force;
 
             float distance = Vector2.Distance(transform.position, path.vectorPath[currentWP]);
-            if(distance < nextWPDistance)
+            if (distance < nextWPDistance)
             {
                 currentWP++;
             }
 
-            if(force.x != 0)
+           
+            if (force.x != 0)
+            {
                 if (force.x < 0)
-                characterSR.transform.localScale = new Vector3(-1, 1, 0);
-            else
-                characterSR.transform.localScale = new Vector3(1, 1, 0);
+                {
+                    characterSR.transform.localScale = new Vector3(-1, 1, 1);
+                    firePos.transform.localPosition = new Vector3(localOffset.x, localOffset.y, localOffset.z);
+                }                                                
+                else
+                {
+                    characterSR.transform.localScale = new Vector3(1, 1, 1);
+                    firePos.transform.localPosition = new Vector3(-localOffset.x, localOffset.y, localOffset.z);
+                }
+                    
+            }
             yield return null;
-        }     
-        
+        }
+
         reachDestination = true;
     }
+
     Vector2 FindTarget()
     {
         Vector3 playerPos = FindObjectOfType<SimplePlayerController>().transform.position;
@@ -116,13 +147,28 @@ public class EnemyAI : MonoBehaviour
         }
     }
 
-    void EnemyShootFireBall()
+    //void EnemyShootFireBall()
+    //{       
+    //    anim.SetTrigger("attack");
+    //    var fireballTmp = Instantiate(fireball, transform.position, Quaternion.identity);
+    //    Rigidbody2D rb = fireballTmp.GetComponent<Rigidbody2D>();
+    //    Vector3 playerPos = FindObjectOfType<SimplePlayerController>().transform.position;
+    //    Vector3 direction = playerPos - transform.position;
+    //    rb.AddForce(direction.normalized * fireballSpeed, ForceMode2D.Impulse);
+    //}
+
+    IEnumerator EnemyShootFireBall()
     {
-        
-        var fireballTmp = Instantiate(fireball, transform.position, Quaternion.identity);
+        anim.SetTrigger("attack");
+      
+        yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
+       
+        var fireballTmp = Instantiate(fireball, firePos.position, Quaternion.identity);
         Rigidbody2D rb = fireballTmp.GetComponent<Rigidbody2D>();
         Vector3 playerPos = FindObjectOfType<SimplePlayerController>().transform.position;
-        Vector3 direction = playerPos - transform.position;
+        Vector3 direction = playerPos - firePos.transform.position;
         rb.AddForce(direction.normalized * fireballSpeed, ForceMode2D.Impulse);
     }
+
+
 }
