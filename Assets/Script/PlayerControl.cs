@@ -80,31 +80,7 @@ public class PlayerControl : MonoBehaviour
             {
                 transform.localScale = new Vector3(-0.2f, 0.2f, 0);
             }
-        }
-        //anim.SetBool("isRun", false);
-
-
-        //if (Input.GetAxisRaw("Horizontal") < 0)
-        //{
-        //    direction = -1;
-        //    moveVelocity = Vector3.left;
-
-        //    transform.localScale = new Vector3(direction, 1, 1);
-        //    if (!anim.GetBool("isJump"))
-        //        anim.SetBool("isRun", true);
-
-        //}
-        //if (Input.GetAxisRaw("Horizontal") > 0)
-        //{
-        //    direction = 1;
-        //    moveVelocity = Vector3.right;
-
-        //    transform.localScale = new Vector3(direction, 1, 1);
-        //    if (!anim.GetBool("isJump"))
-        //        anim.SetBool("isRun", true);
-
-        //}
-        //transform.position += moveVelocity * movePower * Time.deltaTime;
+        }      
     }
     void Jump()
     {
