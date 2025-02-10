@@ -21,6 +21,8 @@ namespace ClearSky
         private float timeBtwFire;
         public float fireballForce;
 
+        public int currentHealth;
+        public int maxHealth;
 
         // Start is called before the first frame update
         void Start()
@@ -43,10 +45,10 @@ namespace ClearSky
 
             }
         }
-        private void OnTriggerEnter2D(Collider2D other)
-        {
-            anim.SetBool("isJump", false);
-        }
+        //private void OnTriggerEnter2D(Collider2D other)
+        //{
+        //    anim.SetBool("isJump", false);
+        //}
 
 
         void Run()
@@ -169,6 +171,21 @@ namespace ClearSky
                 anim.SetTrigger("idle");
                 alive = true;
             }
+        }
+
+        public void ChangeHealth(int amount)
+        {
+            currentHealth += amount;
+            if (currentHealth <= 0)
+            {
+                alive = false;
+                anim.SetTrigger("die");
+            }
+        }
+
+        public void WaitAndDisable()
+        {
+            gameObject.SetActive(false);
         }
     }
 }
