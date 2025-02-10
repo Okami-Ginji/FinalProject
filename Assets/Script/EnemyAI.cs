@@ -4,6 +4,7 @@ using ClearSky;
 using System.Collections;
 using UnityEngine.UIElements;
 using Unity.VisualScripting;
+using TMPro;
 
 public class EnemyAI : MonoBehaviour
 {
@@ -25,7 +26,9 @@ public class EnemyAI : MonoBehaviour
 
     Rigidbody2D rb;
 
-    public SpriteRenderer characterSR;
+    public GameObject targetChase;
+
+    //public SpriteRenderer characterSR;
 
     public bool isShootable = false;
     public GameObject fireball;
@@ -36,42 +39,57 @@ public class EnemyAI : MonoBehaviour
 
     private Animator anim;
 
-    private Vector3 localOffset; 
+    public int currentHealth;
+    public int maxHealth;
+
+    private bool alive = true;
+
+    public GameObject popupDamagePrefab;   
+
+    private Vector3 localOffset;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        anim = characterSR.GetComponent<Animator>();
-        InvokeRepeating("CalculatePath", 0f, 0.5f);       
-        reachDestination = true;     
+        anim = GetComponent<Animator>();
+        localOffset = firePos.transform.localPosition;
+        InvokeRepeating("CalculatePath", 0f, 0.5f);
+        reachDestination = true;
+
     }
 
     // Update is called once per frame
     void Update()
-    {      
-        if (isShootable)
+    {
+        if (alive)
         {
-            cooldown -= Time.deltaTime;
-
-            if (cooldown < 0f)
+            if (isShootable && FindObjectOfType<PlayerControl>() != null)
             {
-                cooldown = timeBtwfire;
-                StartCoroutine(EnemyShootFireBall());
+                cooldown -= Time.deltaTime;
+
+                if (cooldown < 0f)
+                {
+                    cooldown = timeBtwfire;
+                    StartCoroutine(EnemyShootFireBall());
+                }
             }
         }
-        
     }
 
     void CalculatePath()
     {
-        Vector2 targetPos = FindTarget();
-
-        if (seeker.IsDone() && (reachDestination || updateContinuesPath))
+        if (FindObjectOfType<PlayerControl>() != null && alive)
         {
-            seeker.StartPath(transform.position, targetPos, OnPathComplete);
+            Vector2 targetPos = FindTarget();
+
+            if (seeker.IsDone() && (reachDestination || updateContinuesPath))
+            {
+                seeker.StartPath(transform.position, targetPos, OnPathComplete);
+            }
         }
     }
 
-    void OnPathComplete(Path p) {
+    void OnPathComplete(Path p)
+    {
         if (!p.error)
         {
             path = p;
@@ -87,18 +105,18 @@ public class EnemyAI : MonoBehaviour
 
     IEnumerator MoveToTargetCoroutine()
     {
-        Vector3 localOffset = firePos.transform.localPosition; 
+
         int currentWP = 0;
         float stopDistance = 2f;
-        Vector3 playerPos = FindObjectOfType<SimplePlayerController>().transform.position;
+        Vector3 playerPos = FindObjectOfType<PlayerControl>().transform.position;
         while (currentWP < path.vectorPath.Count)
         {
-           
+
             if (Vector2.Distance(transform.position, playerPos) <= stopDistance)
             {
-                anim.SetBool("isMove",true);
-                yield return null; 
-                continue; 
+                anim.SetBool("isMove", true);
+                yield return null;
+                continue;
             }
             else anim.SetBool("isMove", false);
 
@@ -113,20 +131,18 @@ public class EnemyAI : MonoBehaviour
                 currentWP++;
             }
 
-           
+
             if (force.x != 0)
             {
                 if (force.x < 0)
                 {
-                    characterSR.transform.localScale = new Vector3(-1, 1, 1);
-                    firePos.transform.localPosition = new Vector3(localOffset.x, localOffset.y, localOffset.z);
-                }                                                
+                    transform.localScale = new Vector3(-1.9f, 1.9f, 1);
+                }
                 else
                 {
-                    characterSR.transform.localScale = new Vector3(1, 1, 1);
-                    firePos.transform.localPosition = new Vector3(-localOffset.x, localOffset.y, localOffset.z);
+                    transform.localScale = new Vector3(1.9f, 1.9f, 1);
                 }
-                    
+
             }
             yield return null;
         }
@@ -136,10 +152,11 @@ public class EnemyAI : MonoBehaviour
 
     Vector2 FindTarget()
     {
-        Vector3 playerPos = FindObjectOfType<SimplePlayerController>().transform.position;
-        if(roaming == true)
+        Vector3 playerPos = FindObjectOfType<PlayerControl>().transform.position;
+
+        if (roaming == true)
         {
-            return (Vector2)playerPos + (Random.Range(10f,50f) * new Vector2(Random.Range(-1f,1f),Random.Range(-1f,1f)).normalized);
+            return (Vector2)playerPos + (Random.Range(10f, 50f) * new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized);
         }
         else
         {
@@ -152,7 +169,7 @@ public class EnemyAI : MonoBehaviour
     //    anim.SetTrigger("attack");
     //    var fireballTmp = Instantiate(fireball, transform.position, Quaternion.identity);
     //    Rigidbody2D rb = fireballTmp.GetComponent<Rigidbody2D>();
-    //    Vector3 playerPos = FindObjectOfType<SimplePlayerController>().transform.position;
+    //    Vector3 playerPos = FindObjectOfType<PlayerControl>().transform.position;
     //    Vector3 direction = playerPos - transform.position;
     //    rb.AddForce(direction.normalized * fireballSpeed, ForceMode2D.Impulse);
     //}
@@ -160,14 +177,34 @@ public class EnemyAI : MonoBehaviour
     IEnumerator EnemyShootFireBall()
     {
         anim.SetTrigger("attack");
-      
+
         yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
-       
+
         var fireballTmp = Instantiate(fireball, firePos.position, Quaternion.identity);
         Rigidbody2D rb = fireballTmp.GetComponent<Rigidbody2D>();
-        Vector3 playerPos = FindObjectOfType<SimplePlayerController>().transform.position;
+        Vector3 playerPos = FindObjectOfType<PlayerControl>().transform.position;
         Vector3 direction = playerPos - firePos.transform.position;
         rb.AddForce(direction.normalized * fireballSpeed, ForceMode2D.Impulse);
+    }
+
+    public void ChangeHealth(int amount)
+    {
+        currentHealth += amount;
+        Debug.Log(transform.position);
+        GameObject instance = Instantiate(popupDamagePrefab,transform.position, Quaternion.identity);
+        instance.GetComponentInChildren<TMP_Text>().text = amount.ToString();
+        //valueText.text = amount.ToString();
+        
+        if (currentHealth <= 0)
+        {
+            alive = false;
+            anim.SetTrigger("die");
+        }
+    }
+
+    public void WaitAndDisable()
+    {
+        gameObject.SetActive(false);
     }
 
 

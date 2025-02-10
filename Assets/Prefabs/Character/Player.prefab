@@ -1057,10 +1057,9 @@ GameObject:
   - component: {fileID: 4526994907399778573}
   - component: {fileID: 7863259367548719109}
   - component: {fileID: 1526672592856541709}
-  - component: {fileID: 1438165122385044818}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1184,32 +1183,22 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4233578485281666690}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f3cc9e435e0a94141a257a14b1a235ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 5
-  animator: {fileID: 7344379465415244465}
-  moveInput: {x: 0, y: 0, z: 0}
---- !u!114 &1438165122385044818
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4233578485281666690}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 741f30960d63a984c904285d23069b75, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  movePower: 5
+  movePower: 3
   jumpPower: 15
   fireball: {fileID: 2538063348152048904, guid: e5d04436466882b4bacb726418c97512, type: 3}
   firePos: {fileID: 9073704808104333790}
   TimeBtwFire: 0.2
   fireballForce: 20
+  currentHealth: 100
+  maxHealth: 150
+  ammo: {fileID: 0}
+  timeToReload: 3
+  healthBar: {fileID: 0}
 --- !u!1 &4307765680017351527
 GameObject:
   m_ObjectHideFlags: 0
