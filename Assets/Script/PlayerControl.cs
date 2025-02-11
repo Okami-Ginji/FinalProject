@@ -23,7 +23,10 @@ public class PlayerControl : MonoBehaviour
     public float fireballForce;
 
     public int currentHealth;
-    public int maxHealth;
+
+
+    public int maxHealth = 10;
+
 
     public GameObject ammo;
     //public int ammoAmount;
@@ -192,6 +195,7 @@ public class PlayerControl : MonoBehaviour
     {
         currentHealth += amount;
         healthBar.UpdateBar(currentHealth, maxHealth);
+        
         if (currentHealth <= 0)
         {
             alive = false;
