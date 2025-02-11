@@ -24,7 +24,6 @@ public class PlayerControl : MonoBehaviour
 
     public int currentHealth;
     public int maxHealth;
-
     public GameObject ammo;
     //public int ammoAmount;
     private int ammoAmountCopy;
@@ -192,6 +191,7 @@ public class PlayerControl : MonoBehaviour
     {
         currentHealth += amount;
         healthBar.UpdateBar(currentHealth, maxHealth);
+        
         if (currentHealth <= 0)
         {
             alive = false;

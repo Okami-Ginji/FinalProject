@@ -29,6 +29,8 @@ public class EnemyAI : MonoBehaviour
     public GameObject targetChase;
 
     //public SpriteRenderer characterSR;
+    public ExpBar expBar;
+    public float enemyExp = 20;
 
     public bool isShootable = false;
     public GameObject fireball;
@@ -38,7 +40,7 @@ public class EnemyAI : MonoBehaviour
     public Transform firePos;
 
     private Animator anim;
-
+    
     public int currentHealth;
     public int maxHealth;
 
@@ -53,8 +55,9 @@ public class EnemyAI : MonoBehaviour
         anim = GetComponent<Animator>();
         localOffset = firePos.transform.localPosition;
         InvokeRepeating("CalculatePath", 0f, 0.5f);
+        currentHealth = maxHealth;
         reachDestination = true;
-
+        expBar = FindAnyObjectByType<ExpBar>();
     }
 
     // Update is called once per frame
@@ -186,7 +189,6 @@ public class EnemyAI : MonoBehaviour
         Vector3 direction = playerPos - firePos.transform.position;
         rb.AddForce(direction.normalized * fireballSpeed, ForceMode2D.Impulse);
     }
-
     public void ChangeHealth(int amount)
     {
         currentHealth += amount;
@@ -194,11 +196,12 @@ public class EnemyAI : MonoBehaviour
         GameObject instance = Instantiate(popupDamagePrefab,transform.position, Quaternion.identity);
         instance.GetComponentInChildren<TMP_Text>().text = amount.ToString();
         //valueText.text = amount.ToString();
-        
+
         if (currentHealth <= 0)
         {
-            alive = false;
+            alive = false;           
             anim.SetTrigger("die");
+            expBar.UpdateBar(enemyExp);
         }
     }
 

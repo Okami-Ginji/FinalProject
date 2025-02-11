@@ -4,13 +4,14 @@ using UnityEngine;
 public class EnemyHealth : MonoBehaviour
 {
     public int currentHealth;
-    public int maxHealth;
+    public int maxHealth = 6;
     private Animator anim;
     //public SpriteRenderer characterSR;
 
     void Start()
     {
         anim = GetComponent<Animator>();
+        currentHealth = maxHealth;
     }
 
     public void CalculatorDamage(int amount)

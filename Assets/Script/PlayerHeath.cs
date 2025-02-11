@@ -4,14 +4,15 @@ using UnityEngine.UIElements;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public int currentHealth;
-    public int maxHealth;
+    public int currentHealth ;
+    public int maxHealth = 10;
     private Animator anim;
     private bool alive = true;
 
     void Start()
     {
         anim =  GetComponent<Animator>();
+        currentHealth = maxHealth;
     }
 
     public void CalculatorDamage(int amount)
@@ -21,8 +22,10 @@ public class PlayerHealth : MonoBehaviour
     public void ChangeHealth(int amount)
     {
         currentHealth += amount;
-        if (currentHealth <= 0)
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+        if (currentHealth <= 0 && alive)
         {
+            alive = false;
             anim.SetTrigger("die");
             StartCoroutine(WaitAndDisable()); 
         }

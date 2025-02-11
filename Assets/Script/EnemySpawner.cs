@@ -3,32 +3,39 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     [SerializeField]
-    private GameObject enemyPrefab;
+    private GameObject enemyPrefab; 
 
     [SerializeField]
-    private float minimumSpawnTime;
-
-    [SerializeField]
-    private float maximumSpawnTime;
+    private float spawnTime = 5.0f; 
 
     private float timeUntilSpawn;
+
     private void Awake()
     {
-        SetTimeUntilSpawn();
-    }  
-
-    // Update is called once per frame
-    void Update()
-    {
-        timeUntilSpawn -= Time.deltaTime;
-        if(timeUntilSpawn <= 0)
+        // Validate that the enemy prefab is assigned
+        if (enemyPrefab == null)
         {
-            Instantiate(enemyPrefab, transform.position,Quaternion.identity);
-            SetTimeUntilSpawn();
+            Debug.LogError("Enemy prefab is not assigned in the EnemySpawner script!", this);
+            enabled = false; // Disable the script to prevent errors
+            return;
+        }
+
+        timeUntilSpawn = spawnTime; // Initialize the spawn timer
+    }
+
+    private void Update()
+    {
+       
+        timeUntilSpawn -= Time.deltaTime;
+        if (timeUntilSpawn <= 0)
+        {
+            SpawnEnemy();
+            timeUntilSpawn = spawnTime; 
         }
     }
-    private void SetTimeUntilSpawn()
+
+    private void SpawnEnemy()
     {
-        timeUntilSpawn = Random.Range(minimumSpawnTime, maximumSpawnTime);
+        Instantiate(enemyPrefab, transform.position, Quaternion.identity);
     }
 }
