@@ -270,6 +270,8 @@ MonoBehaviour:
   nextWPDistance: 0.3
   updateContinuesPath: 1
   targetChase: {fileID: 4233578485281666690, guid: 188c39a15c39a324697cde1a0263f64b, type: 3}
+  expUI: {fileID: 0}
+  enemyExp: 20
   isShootable: 1
   fireball: {fileID: 8788114609121302981, guid: 18f05d56052fb104e8ffacd48804c508, type: 3}
   fireballSpeed: 5
