@@ -28,6 +28,9 @@ public class EnemyAI : MonoBehaviour
 
     public GameObject targetChase;
 
+    public ExpUI expUI;
+    public float enemyExp ;
+
     //public SpriteRenderer characterSR;
 
     public bool isShootable = false;
@@ -54,7 +57,7 @@ public class EnemyAI : MonoBehaviour
         localOffset = firePos.transform.localPosition;
         InvokeRepeating("CalculatePath", 0f, 0.5f);
         reachDestination = true;
-
+        expUI =FindAnyObjectByType<ExpUI>();
     }
 
     // Update is called once per frame
@@ -199,6 +202,7 @@ public class EnemyAI : MonoBehaviour
         {
             alive = false;
             anim.SetTrigger("die");
+            expUI.UpdateBar(enemyExp);
         }
     }
 
