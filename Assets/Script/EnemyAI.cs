@@ -31,6 +31,12 @@ public class EnemyAI : MonoBehaviour
     public ExpUI expUI;
     public float enemyExp ;
 
+    public ScoreUI scoreUI;
+    public int enemyScore = 100;
+
+    public BoxCollider2D boxCollider2D;
+
+    [SerializeField] EnemyHealthBar healthBar;
     //public SpriteRenderer characterSR;
 
     public bool isShootable = false;
@@ -58,6 +64,11 @@ public class EnemyAI : MonoBehaviour
         InvokeRepeating("CalculatePath", 0f, 0.5f);
         reachDestination = true;
         expUI =FindAnyObjectByType<ExpUI>();
+        scoreUI = FindAnyObjectByType<ScoreUI>();
+        boxCollider2D = GetComponent<BoxCollider2D>();
+        healthBar = GetComponentInChildren<EnemyHealthBar>();
+        healthBar.UpdateEnemyHealth(currentHealth, maxHealth);
+
     }
 
     // Update is called once per frame
@@ -197,12 +208,22 @@ public class EnemyAI : MonoBehaviour
         GameObject instance = Instantiate(popupDamagePrefab,transform.position, Quaternion.identity);
         instance.GetComponentInChildren<TMP_Text>().text = amount.ToString();
         //valueText.text = amount.ToString();
-        
+
+        healthBar.UpdateEnemyHealth(currentHealth,maxHealth);
+
         if (currentHealth <= 0)
         {
             alive = false;
             anim.SetTrigger("die");
-            expUI.UpdateBar(enemyExp);
+            if (expUI != null)
+            {
+                expUI.UpdateBar(enemyExp);
+            }
+            if (scoreUI != null) {
+                scoreUI.AddScore(enemyScore);
+            }
+            boxCollider2D.enabled = false;
+                
         }
     }
 
