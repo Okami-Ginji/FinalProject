@@ -195,8 +195,9 @@ public class PlayerControl : MonoBehaviour
         if (currentHealth <= 0)
         {
             alive = false;
-            anim.SetTrigger("die");
+            anim.SetTrigger("die");          
         }
+        
     }
 
     public void WaitAndDisable()

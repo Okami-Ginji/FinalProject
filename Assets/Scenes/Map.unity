@@ -13537,7 +13537,7 @@ MonoBehaviour:
   currentExp: 0
   maxExp: 100
   fillBar: {fileID: 983743899}
-  valueText: {fileID: 515687573}
+  expText: {fileID: 515687573}
 --- !u!1 &1336387539
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,5 +15,9 @@ public class HealthBar : MonoBehaviour
         healthTextAnim.Play("HealthText");
         fillBar.fillAmount = (float)currentHealth/(float)maxHealth;
         valueText.text = currentHealth + " / " + maxHealth;
+        if (currentHealth <= 0)
+        {
+            valueText.text = "0" + " / " + maxHealth;
+        }
     }
 }
