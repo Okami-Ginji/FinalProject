@@ -7,32 +7,32 @@ public class ExpUI : MonoBehaviour
     public float currentExp ;
     public float maxExp = 100;
     public UnityEngine.UI.Image fillBar;
-    public TextMeshProUGUI valueText;
+    public TextMeshProUGUI expText;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         level = 0;
         currentExp = 0;
+        UpdateUI();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-    
     public void UpdateBar(float enemyExp)
     {
-        currentExp += (float)enemyExp;
-        
-        if (currentExp >= maxExp)
+        currentExp += enemyExp;
+
+        while (currentExp >= maxExp)
         {
-            currentExp -= (float)maxExp; 
+            currentExp -= maxExp;
             level++;
-            
         }
-        fillBar.fillAmount = (float)currentExp / (float)maxExp;
-        valueText.text = "Level " + level;
+
+        UpdateUI();
+    }
+
+    private void UpdateUI()
+    {
+        fillBar.fillAmount = currentExp / maxExp;
+        expText.text = "Level " + level;
     }
 }

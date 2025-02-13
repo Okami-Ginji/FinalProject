@@ -1194,8 +1194,8 @@ MonoBehaviour:
   firePos: {fileID: 9073704808104333790}
   TimeBtwFire: 0.2
   fireballForce: 20
-  currentHealth: 150
-  maxHealth: 150
+  currentHealth: 10
+  maxHealth: 10
   ammo: {fileID: 0}
   timeToReload: 3
   healthBar: {fileID: 0}

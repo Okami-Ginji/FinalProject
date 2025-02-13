@@ -4,28 +4,29 @@ public class EnemySpawner : MonoBehaviour
 {
     [SerializeField]
     private GameObject enemyPrefab;
-   
+
     [SerializeField]
-    private float spawnTime = 5.0f;
+    private float spawnTime = 10.0f;
 
     private float timeUntilSpawn;
+
     private void Awake()
     {
-        SetTimeUntilSpawn();
+        timeUntilSpawn = spawnTime; // Initialize the spawn timer
     }
 
-    // Update is called once per frame
     private void Update()
     {
 
         timeUntilSpawn -= Time.deltaTime;
         if (timeUntilSpawn <= 0)
         {
-            SetTimeUntilSpawn();
+            SpawnEnemy();
             timeUntilSpawn = spawnTime;
         }
     }
-    private void SetTimeUntilSpawn()
+
+    private void SpawnEnemy()
     {
         Instantiate(enemyPrefab, transform.position, Quaternion.identity);
     }
