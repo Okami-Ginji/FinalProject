@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using TMPro;
 using System.Collections;
 
@@ -32,6 +32,9 @@ public class PlayerControl : MonoBehaviour
     private float cooldown;
 
     public HealthBar healthBar;
+
+    // âm thanh bước chân
+    public AudioSource footstepSound;
 
     // Start is called before the first frame update
     void Start()
@@ -79,8 +82,21 @@ public class PlayerControl : MonoBehaviour
             else
             {
                 transform.localScale = new Vector3(-0.2f, 0.2f, 0);
+            }         
+        }
+
+        //âm thanh khi di chuyển
+        if (moveVelocity.magnitude > 0)
+        {
+            if (!footstepSound.isPlaying)
+            {
+                footstepSound.Play();
             }
-        }      
+        }
+        else
+        {
+            footstepSound.Stop();
+        }
     }
     void Jump()
     {
