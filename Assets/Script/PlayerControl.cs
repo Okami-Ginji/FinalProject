@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 using TMPro;
 using System.Collections;
 
@@ -9,7 +9,7 @@ public class PlayerControl : MonoBehaviour
     public float jumpPower = 15f; //Set Gravity Scale in Rigidbody2D Component to 5
 
     //Dash
-    public float dashBoost = 3f;
+    public float dashBoost = 5f;
     public float dashTime;
     private float _dashTime = 0.5f;
     bool isDashing = false;
@@ -51,8 +51,8 @@ public class PlayerControl : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();
-        healthBar.UpdateBar(currentHealth, maxHealth);
+        anim = GetComponent<Animator>();      
+        healthBar.UpdateBar(currentHealth, maxHealth);     
         cooldown = timeToReload;
         Reload();
     }
@@ -93,7 +93,7 @@ public class PlayerControl : MonoBehaviour
             else
             {
                 transform.localScale = new Vector3(-0.2f, 0.2f, 0);
-            }
+            }         
         }
 
         if (Input.GetKeyDown(KeyCode.Space) && _dashTime <= 0 && isDashing == false)
@@ -114,7 +114,6 @@ public class PlayerControl : MonoBehaviour
             _dashTime -= Time.deltaTime;
 
         }
-
 
         //âm thanh khi di chuyển
         if (moveVelocity.magnitude > 0)
@@ -152,6 +151,7 @@ public class PlayerControl : MonoBehaviour
             yield return new WaitForSeconds(ghostDelay);
         }
     }
+
     void Jump()
     {
         if ((Input.GetButtonDown("Jump") || Input.GetAxisRaw("Vertical") > 0)
@@ -173,8 +173,8 @@ public class PlayerControl : MonoBehaviour
         isJumping = false;
     }
     void Attack()
-    {
-        if (ammoAmountCopy > 0)
+    {       
+        if(ammoAmountCopy > 0)
         {
             timeBtwFire -= Time.deltaTime;
             if (Input.GetMouseButton(0) && timeBtwFire < 0)
@@ -184,7 +184,7 @@ public class PlayerControl : MonoBehaviour
                 timeBtwFire = TimeBtwFire;
             }
         }
-        else if (ammoAmountCopy <= 0)
+        else if(ammoAmountCopy <= 0)
         {
             cooldown -= Time.deltaTime;
             if (cooldown < 0f)
@@ -192,9 +192,9 @@ public class PlayerControl : MonoBehaviour
                 cooldown = timeToReload;
                 Reload();
             }
-
+            
         }
-
+        
     }
 
 
@@ -207,7 +207,7 @@ public class PlayerControl : MonoBehaviour
         Quaternion rotation = Quaternion.Euler(0, 0, angle);
         firePos.rotation = rotation;
 
-        if (transform.eulerAngles.z > 90 && transform.eulerAngles.z < 270)
+        if (transform.eulerAngles.z > 90 && transform.eulerAngles.z< 270)
             firePos.localScale = new Vector3(1, -1, 0);
         else firePos.localScale = new Vector3(1, 1, 0);
     }
@@ -223,13 +223,12 @@ public class PlayerControl : MonoBehaviour
     }
 
     void Reload()
-    {
+    {       
         ammoAmountCopy = ammo.transform.childCount;
-        for (int i = 0; i < ammo.transform.childCount; i++)
-        {
+        for (int i = 0; i < ammo.transform.childCount; i++) {
             ammo.transform.GetChild(i).gameObject.SetActive(true);
         }
-
+         
     }
     void Hurt()
     {
@@ -266,9 +265,9 @@ public class PlayerControl : MonoBehaviour
         if (currentHealth <= 0)
         {
             alive = false;
-            anim.SetTrigger("die");
+            anim.SetTrigger("die");          
         }
-
+        
     }
 
     public void WaitAndDisable()
@@ -276,5 +275,3 @@ public class PlayerControl : MonoBehaviour
         gameObject.SetActive(false);
     }
 }
-
-
