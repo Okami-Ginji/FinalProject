@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using TMPro;
 using System.Collections;
 
@@ -7,6 +7,17 @@ public class PlayerControl : MonoBehaviour
 {
     public float movePower = 10f;
     public float jumpPower = 15f; //Set Gravity Scale in Rigidbody2D Component to 5
+
+    //Dash
+    public float dashBoost = 3f;
+    public float dashTime;
+    private float _dashTime = 0.5f;
+    bool isDashing = false;
+
+    public GameObject ghostEffect;
+    public float ghostDelay = 0.05f;
+    private Coroutine dashEffectCoroutine;
+
 
     private Rigidbody2D rb;
     private Animator anim;
@@ -33,12 +44,15 @@ public class PlayerControl : MonoBehaviour
 
     public HealthBar healthBar;
 
+    // âm thanh bước chân
+    public AudioSource footstepSound;
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();      
-        healthBar.UpdateBar(currentHealth, maxHealth);     
+        anim = GetComponent<Animator>();
+        healthBar.UpdateBar(currentHealth, maxHealth);
         cooldown = timeToReload;
         Reload();
     }
@@ -80,7 +94,63 @@ public class PlayerControl : MonoBehaviour
             {
                 transform.localScale = new Vector3(-0.2f, 0.2f, 0);
             }
-        }      
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space) && _dashTime <= 0 && isDashing == false)
+        {
+            movePower += dashBoost;
+            _dashTime = dashTime;
+            isDashing = true;
+            StartDashEffect();
+        }
+        if (_dashTime <= 0 && isDashing == true)
+        {
+            movePower -= dashBoost;
+            isDashing = false;
+            StopDashEffect();
+        }
+        else
+        {
+            _dashTime -= Time.deltaTime;
+
+        }
+
+
+        //âm thanh khi di chuyển
+        if (moveVelocity.magnitude > 0)
+        {
+            if (!footstepSound.isPlaying)
+            {
+                footstepSound.Play();
+            }
+        }
+        else
+        {
+            footstepSound.Stop();
+        }
+    }
+    void StopDashEffect()
+    {
+        if (dashEffectCoroutine != null) StopCoroutine(dashEffectCoroutine);
+    }
+
+    void StartDashEffect()
+    {
+        if (dashEffectCoroutine != null) StopCoroutine(dashEffectCoroutine);
+        dashEffectCoroutine = StartCoroutine(DashEffectCoroutine());
+    }
+
+    IEnumerator DashEffectCoroutine()
+    {
+        while (true)
+        {
+            GameObject ghost = Instantiate(ghostEffect, transform.position, transform.rotation);
+            Sprite currentSprite = GetComponentInChildren<SpriteRenderer>().sprite;
+            ghost.GetComponentInChildren<SpriteRenderer>().sprite = currentSprite;
+
+            Destroy(ghost, 0.5f);
+            yield return new WaitForSeconds(ghostDelay);
+        }
     }
     void Jump()
     {
@@ -103,8 +173,8 @@ public class PlayerControl : MonoBehaviour
         isJumping = false;
     }
     void Attack()
-    {       
-        if(ammoAmountCopy > 0)
+    {
+        if (ammoAmountCopy > 0)
         {
             timeBtwFire -= Time.deltaTime;
             if (Input.GetMouseButton(0) && timeBtwFire < 0)
@@ -114,7 +184,7 @@ public class PlayerControl : MonoBehaviour
                 timeBtwFire = TimeBtwFire;
             }
         }
-        else if(ammoAmountCopy <= 0)
+        else if (ammoAmountCopy <= 0)
         {
             cooldown -= Time.deltaTime;
             if (cooldown < 0f)
@@ -122,9 +192,9 @@ public class PlayerControl : MonoBehaviour
                 cooldown = timeToReload;
                 Reload();
             }
-            
+
         }
-        
+
     }
 
 
@@ -137,7 +207,7 @@ public class PlayerControl : MonoBehaviour
         Quaternion rotation = Quaternion.Euler(0, 0, angle);
         firePos.rotation = rotation;
 
-        if (transform.eulerAngles.z > 90 && transform.eulerAngles.z< 270)
+        if (transform.eulerAngles.z > 90 && transform.eulerAngles.z < 270)
             firePos.localScale = new Vector3(1, -1, 0);
         else firePos.localScale = new Vector3(1, 1, 0);
     }
@@ -153,12 +223,13 @@ public class PlayerControl : MonoBehaviour
     }
 
     void Reload()
-    {       
+    {
         ammoAmountCopy = ammo.transform.childCount;
-        for (int i = 0; i < ammo.transform.childCount; i++) {
+        for (int i = 0; i < ammo.transform.childCount; i++)
+        {
             ammo.transform.GetChild(i).gameObject.SetActive(true);
         }
-         
+
     }
     void Hurt()
     {
@@ -195,9 +266,9 @@ public class PlayerControl : MonoBehaviour
         if (currentHealth <= 0)
         {
             alive = false;
-            anim.SetTrigger("die");          
+            anim.SetTrigger("die");
         }
-        
+
     }
 
     public void WaitAndDisable()
