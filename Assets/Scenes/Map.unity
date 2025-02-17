@@ -28223,9 +28223,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 495922823}
     - target: {fileID: 1526672592856541709, guid: 188c39a15c39a324697cde1a0263f64b, type: 3}
+      propertyPath: dashTime
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1526672592856541709, guid: 188c39a15c39a324697cde1a0263f64b, type: 3}
+      propertyPath: dashBoost
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1526672592856541709, guid: 188c39a15c39a324697cde1a0263f64b, type: 3}
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 46599121}
+    - target: {fileID: 1526672592856541709, guid: 188c39a15c39a324697cde1a0263f64b, type: 3}
+      propertyPath: ghostEffect
+      value: 
+      objectReference: {fileID: 5548945793308304524, guid: 5af5ed1f89aa08848b6c3efc4faf6742, type: 3}
     - target: {fileID: 1526672592856541709, guid: 188c39a15c39a324697cde1a0263f64b, type: 3}
       propertyPath: footstepSound
       value: 
