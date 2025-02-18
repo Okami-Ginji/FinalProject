@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 using TMPro;
 using System.Collections;
 
@@ -7,6 +7,17 @@ public class PlayerControl : MonoBehaviour
 {
     public float movePower = 10f;
     public float jumpPower = 15f; //Set Gravity Scale in Rigidbody2D Component to 5
+
+    //Dash
+    public float dashBoost = 5f;
+    public float dashTime;
+    private float _dashTime = 0.5f;
+    bool isDashing = false;
+
+    public GameObject ghostEffect;
+    public float ghostDelay = 0.05f;
+    private Coroutine dashEffectCoroutine;
+
 
     private Rigidbody2D rb;
     private Animator anim;
@@ -85,6 +96,25 @@ public class PlayerControl : MonoBehaviour
             }         
         }
 
+        if (Input.GetKeyDown(KeyCode.Space) && _dashTime <= 0 && isDashing == false)
+        {
+            movePower += dashBoost;
+            _dashTime = dashTime;
+            isDashing = true;
+            StartDashEffect();
+        }
+        if (_dashTime <= 0 && isDashing == true)
+        {
+            movePower -= dashBoost;
+            isDashing = false;
+            StopDashEffect();
+        }
+        else
+        {
+            _dashTime -= Time.deltaTime;
+
+        }
+
         //âm thanh khi di chuyển
         if (moveVelocity.magnitude > 0)
         {
@@ -98,6 +128,30 @@ public class PlayerControl : MonoBehaviour
             footstepSound.Stop();
         }
     }
+    void StopDashEffect()
+    {
+        if (dashEffectCoroutine != null) StopCoroutine(dashEffectCoroutine);
+    }
+
+    void StartDashEffect()
+    {
+        if (dashEffectCoroutine != null) StopCoroutine(dashEffectCoroutine);
+        dashEffectCoroutine = StartCoroutine(DashEffectCoroutine());
+    }
+
+    IEnumerator DashEffectCoroutine()
+    {
+        while (true)
+        {
+            GameObject ghost = Instantiate(ghostEffect, transform.position, transform.rotation);
+            Sprite currentSprite = GetComponentInChildren<SpriteRenderer>().sprite;
+            ghost.GetComponentInChildren<SpriteRenderer>().sprite = currentSprite;
+
+            Destroy(ghost, 0.5f);
+            yield return new WaitForSeconds(ghostDelay);
+        }
+    }
+
     void Jump()
     {
         if ((Input.GetButtonDown("Jump") || Input.GetAxisRaw("Vertical") > 0)
@@ -221,5 +275,3 @@ public class PlayerControl : MonoBehaviour
         gameObject.SetActive(false);
     }
 }
-
-
