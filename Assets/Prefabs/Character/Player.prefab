@@ -1197,8 +1197,9 @@ MonoBehaviour:
   currentHealth: 10
   maxHealth: 10
   ammo: {fileID: 0}
-  timeToReload: 3
+  timeToReload: 10
   healthBar: {fileID: 0}
+  footstepSound: {fileID: 0}
 --- !u!1 &4307765680017351527
 GameObject:
   m_ObjectHideFlags: 0
