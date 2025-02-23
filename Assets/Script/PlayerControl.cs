@@ -22,7 +22,7 @@ public class PlayerControl : MonoBehaviour
     private Rigidbody2D rb;
     private Animator anim;
     Vector3 movement;
-    private int direction = 1;
+    
     bool isJumping = false;
     private bool alive = true;
 
@@ -47,6 +47,8 @@ public class PlayerControl : MonoBehaviour
     // âm thanh bước chân
     public AudioSource footstepSound;
 
+    private Vector3 playerScale;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -55,6 +57,7 @@ public class PlayerControl : MonoBehaviour
         healthBar.UpdateBar(currentHealth, maxHealth);     
         cooldown = timeToReload;
         Reload();
+        playerScale = transform.localScale;
     }
 
     private void Update()
@@ -62,13 +65,10 @@ public class PlayerControl : MonoBehaviour
         Restart();
         if (alive)
         {
-            RotaleFirePos();
-            Hurt();
+            RotaleFirePos();          
             Die();
-            Attack();
-            //Jump();
+            Attack();           
             Run();
-
         }
     }
     //private void OnTriggerEnter2D(Collider2D other)
@@ -87,12 +87,14 @@ public class PlayerControl : MonoBehaviour
         if (moveVelocity.x != 0)
         {
             if (moveVelocity.x > 0)
-            {
-                transform.localScale = new Vector3(0.2f, 0.2f, 0);
+            {             
+                //transform.localScale = new Vector3(0.2f, 0.2f, 0);
+                transform.localScale = new Vector3(playerScale.x, playerScale.y, playerScale.z);
             }
             else
             {
-                transform.localScale = new Vector3(-0.2f, 0.2f, 0);
+                transform.localScale = new Vector3(-playerScale.x, playerScale.y, playerScale.z);
+                //transform.localScale = new Vector3(-0.2f, 0.2f, 0);
             }         
         }
 
@@ -180,7 +182,7 @@ public class PlayerControl : MonoBehaviour
             if (Input.GetMouseButton(0) && timeBtwFire < 0)
             {
                 anim.SetTrigger("attack");
-                FireBall();
+                //FireBall();
                 timeBtwFire = TimeBtwFire;
             }
         }
@@ -214,11 +216,10 @@ public class PlayerControl : MonoBehaviour
     void FireBall()
     {
         timeBtwFire = TimeBtwFire;
-        GameObject fireballTmp = Instantiate(fireball, firePos.position, Quaternion.identity);
+        GameObject fireballTmp = Instantiate(fireball, firePos.position, firePos.transform.rotation);
         Rigidbody2D rb = fireballTmp.GetComponent<Rigidbody2D>();
         rb.AddForce(firePos.right * fireballForce, ForceMode2D.Impulse);
-        ammoAmountCopy -= 1;
-        Debug.Log(ammo.transform.GetChild(ammoAmountCopy).name);
+        ammoAmountCopy -= 1;       
         ammo.transform.GetChild(ammoAmountCopy).gameObject.SetActive(false);
     }
 
@@ -230,17 +231,26 @@ public class PlayerControl : MonoBehaviour
         }
          
     }
-    void Hurt()
+    public void Hurt(float damageForce)
     {
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        if (alive)
         {
             anim.SetTrigger("hurt");
-            if (direction == 1)
-                rb.AddForce(new Vector2(-5f, 1f), ForceMode2D.Impulse);
-            else
-                rb.AddForce(new Vector2(5f, 1f), ForceMode2D.Impulse);
+          
+            float direction = Mathf.Sign(transform.localScale.x);
+          
+            rb.linearVelocity = new Vector2(-direction * damageForce, rb.linearVelocity.y);
+            
+            StartCoroutine(StopKnockback());
         }
     }
+  
+    IEnumerator StopKnockback()
+    {
+        yield return new WaitForSeconds(0.2f);  
+        rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);  
+    }
+
     void Die()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -260,14 +270,16 @@ public class PlayerControl : MonoBehaviour
 
     public void ChangeHealth(int amount)
     {
-        currentHealth += amount;
-        healthBar.UpdateBar(currentHealth, maxHealth);
-        if (currentHealth <= 0)
+        if (alive)
         {
-            alive = false;
-            anim.SetTrigger("die");          
+            currentHealth += amount;
+            healthBar.UpdateBar(currentHealth, maxHealth);
+            if (currentHealth <= 0)
+            {
+                alive = false;
+                anim.SetTrigger("die");
+            }
         }
-        
     }
 
     public void WaitAndDisable()
