@@ -3,6 +3,7 @@ using UnityEngine;
 public class FireBall : MonoBehaviour
 {
     public int damage;
+    public float damgeForce;
     public bool isPlayerShoot;
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -10,6 +11,7 @@ public class FireBall : MonoBehaviour
         if (collision.CompareTag("Player") && !isPlayerShoot)
         {
             collision.gameObject.GetComponent<PlayerControl>().ChangeHealth(-damage);
+            collision.gameObject.GetComponent<PlayerControl>().Hurt(damgeForce);
             Destroy(gameObject);
         }
         else if (collision.CompareTag("Enemy") && isPlayerShoot)
