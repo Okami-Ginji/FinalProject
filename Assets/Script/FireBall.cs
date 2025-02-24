@@ -19,5 +19,10 @@ public class FireBall : MonoBehaviour
             collision.gameObject.GetComponent<EnemyAI>().ChangeHealth(-damage);
             Destroy(gameObject);
         }
+        else if (collision.CompareTag("EnemySeries") && isPlayerShoot)
+        {
+            collision.gameObject.GetComponent<EnemyAISeries>().ChangeHealth(-damage);
+            Destroy(gameObject);
+        }
     }
 }
