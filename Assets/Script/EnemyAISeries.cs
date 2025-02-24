@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 using Unity.VisualScripting;
 using TMPro;
 
-public class EnemyAI : MonoBehaviour
+public class EnemyAISeries : MonoBehaviour
 {
     public bool roaming = true;
 
@@ -27,6 +27,7 @@ public class EnemyAI : MonoBehaviour
     Rigidbody2D rb;
 
     public GameObject targetChase;
+    public int damage;
 
     public ExpUI expUI;
     public float enemyExp;
@@ -43,11 +44,9 @@ public class EnemyAI : MonoBehaviour
     public float distanceToAttack;
     public float stopDistance;
 
-    public GameObject fireball;
-    public float fireballSpeed;
     public float timeBtwfire;
     private float cooldown;
-    public Transform firePos;
+    public Transform attackPos;
 
     private Animator anim;
 
@@ -56,11 +55,9 @@ public class EnemyAI : MonoBehaviour
 
     private bool alive = true;
 
-    public int damgeForSeries;
+    public GameObject popupDamagePrefab;
 
     public LayerMask playerLayer;
-
-    public GameObject popupDamagePrefab;
 
 
     private Vector3 EnemyScale;
@@ -100,6 +97,8 @@ public class EnemyAI : MonoBehaviour
             }
         }
     }
+
+
     void CalculatePath()
     {
         if (FindObjectOfType<PlayerControl>() != null && alive)
@@ -131,7 +130,7 @@ public class EnemyAI : MonoBehaviour
     IEnumerator MoveToTargetCoroutine()
     {
 
-        int currentWP = 0;      
+        int currentWP = 0;       
         Vector3 playerPos = FindObjectOfType<PlayerControl>().transform.position;
         while (currentWP < path.vectorPath.Count)
         {
@@ -198,14 +197,13 @@ public class EnemyAI : MonoBehaviour
     //    rb.AddForce(direction.normalized * fireballSpeed, ForceMode2D.Impulse);
     //}
 
-    public void EnemyShootFireBall()
+    public void Attack()
     {
-             
-        var fireballTmp = Instantiate(fireball, firePos.position, Quaternion.identity);
-        Rigidbody2D rb = fireballTmp.GetComponent<Rigidbody2D>();
-        Vector3 playerPos = FindObjectOfType<PlayerControl>().transform.position;
-        Vector3 direction = playerPos - firePos.transform.position;
-        rb.AddForce(direction.normalized * fireballSpeed, ForceMode2D.Impulse);
+        Collider2D[] hits = Physics2D.OverlapCircleAll(attackPos.position, distanceToAttack, playerLayer);
+        if(hits.Length > 0)
+        {
+            hits[0].GetComponent<PlayerControl>().ChangeHealth(-damage);
+        }
     }
 
     public void ChangeHealth(int amount)
