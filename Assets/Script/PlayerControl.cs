@@ -1,6 +1,7 @@
 ﻿﻿using UnityEngine;
 using TMPro;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 
 public class PlayerControl : MonoBehaviour
@@ -43,10 +44,9 @@ public class PlayerControl : MonoBehaviour
     private float cooldown;
 
     public HealthBar healthBar;
-
+    private Menu menu;
     // âm thanh bước chân
     public AudioSource footstepSound;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -59,7 +59,7 @@ public class PlayerControl : MonoBehaviour
 
     private void Update()
     {
-        Restart();
+       Restart();
         if (alive)
         {
             RotaleFirePos();
@@ -68,8 +68,11 @@ public class PlayerControl : MonoBehaviour
             Attack();
             //Jump();
             Run();
+            
 
         }
+
+
     }
     //private void OnTriggerEnter2D(Collider2D other)
     //{
@@ -79,6 +82,7 @@ public class PlayerControl : MonoBehaviour
 
     void Run()
     {
+        if (Menu.GamePause) return;
         Vector3 moveVelocity = Vector3.zero;
         moveVelocity.x = Input.GetAxis("Horizontal");
         moveVelocity.y = Input.GetAxis("Vertical");
@@ -121,6 +125,7 @@ public class PlayerControl : MonoBehaviour
             if (!footstepSound.isPlaying)
             {
                 footstepSound.Play();
+                
             }
         }
         else
@@ -246,9 +251,10 @@ public class PlayerControl : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             anim.SetTrigger("die");
-            alive = false;
+            alive = false;          
         }
     }
+
     void Restart()
     {
         if (Input.GetKeyDown(KeyCode.Alpha0))
@@ -265,7 +271,8 @@ public class PlayerControl : MonoBehaviour
         if (currentHealth <= 0)
         {
             alive = false;
-            anim.SetTrigger("die");          
+            anim.SetTrigger("die"); 
+            Die();
         }
         
     }
