@@ -610,6 +610,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: NumberAmo
       objectReference: {fileID: 0}
+    - target: {fileID: 3340300600828913497, guid: b4268eb1ee014b641ba5c5f5c3577e41, type: 3}
+      propertyPath: m_TagString
+      value: NumberAmo
+      objectReference: {fileID: 0}
     - target: {fileID: 5347932607739152277, guid: b4268eb1ee014b641ba5c5f5c3577e41, type: 3}
       propertyPath: m_IsActive
       value: 1

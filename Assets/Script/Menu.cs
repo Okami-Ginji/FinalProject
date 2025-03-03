@@ -8,7 +8,12 @@ public class Menu : MonoBehaviour
     public GameObject dieMenu;
     private PlayerControl playerControl;
     private AudioManager audioManager;
-    private void Awake()
+    //private void Awake()
+    //{
+    //    playerControl = FindObjectOfType<PlayerControl>();
+    //    audioManager = FindObjectOfType<AudioManager>();
+    //}
+    private void Start()
     {
         playerControl = FindObjectOfType<PlayerControl>();
         audioManager = FindObjectOfType<AudioManager>();
@@ -17,7 +22,7 @@ public class Menu : MonoBehaviour
     //Escmenu
     void Update()
     {
-        if (playerControl.currentHealth > 0 && Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (GamePause)
             {
@@ -27,12 +32,7 @@ public class Menu : MonoBehaviour
             {
                 Pause();
             }
-        }
-
-        if (playerControl.currentHealth <= 0)
-        {
-            ShowDieMenu();
-        }
+        }    
     }
     public void LoadGame()
     {
@@ -53,7 +53,7 @@ public class Menu : MonoBehaviour
         Time.timeScale = 1f;
         GamePause = false;
         audioManager.musicAudioSource.UnPause();
-        playerControl.footstepSound.UnPause();
+        //playerControl.footstepSound.UnPause();
     }
 
     void Pause()
@@ -62,7 +62,7 @@ public class Menu : MonoBehaviour
         Time.timeScale = 0f;
         GamePause = true;
         audioManager.musicAudioSource.Pause();
-        playerControl.footstepSound.Pause();
+        //playerControl.footstepSound.Pause();
     }
 
     public void LoadMenu()
