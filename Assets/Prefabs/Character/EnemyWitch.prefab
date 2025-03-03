@@ -587,9 +587,8 @@ MonoBehaviour:
   nextWPDistance: 0.3
   updateContinuesPath: 1
   targetChase: {fileID: 4233578485281666690, guid: 188c39a15c39a324697cde1a0263f64b, type: 3}
-  expUI: {fileID: 0}
-  enemyExp: 20
   energyObject: {fileID: 3042231078190144995, guid: 6e94f20bb4f590e4a864973be29173a0, type: 3}
+  heal: {fileID: 3256458835383546594, guid: 30806f5a47b3e5b469be3812d4041d35, type: 3}
   scoreUI: {fileID: 0}
   enemyScore: 100
   boxCollider2D: {fileID: 0}
@@ -608,6 +607,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   popupDamagePrefab: {fileID: 4353243798426777024, guid: d11471afd37dd1d4984f10de7af9b482, type: 3}
+  knockbackTime: 0.2
+  knockbackForce: 15
+  gettingKnockback: 0
 --- !u!114 &2611177165635255035
 MonoBehaviour:
   m_ObjectHideFlags: 0

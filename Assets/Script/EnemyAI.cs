@@ -256,17 +256,20 @@ public class EnemyAI : MonoBehaviour
         Vector3 dropOffset = new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(0.3f, 0.8f), 0);
 
         
-        if (energyObject != null)
+        if (energyObject != null && heal != null)
         {
             Instantiate(energyObject, transform.position + dropOffset, Quaternion.identity);
+            int chance = Random.Range(1, 11);
+            if (chance > 3)
+            {
+                Instantiate(heal, transform.position - dropOffset, Quaternion.identity);
+            }
+
         }
 
-        
-       
-        if ( heal != null)
-        {
-            Instantiate(heal, transform.position + dropOffset, Quaternion.identity);
-        }
+
+
+
     }
 
     public void getKnockback(Vector3 damageSource)
