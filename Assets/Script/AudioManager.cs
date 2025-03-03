@@ -8,10 +8,11 @@ public class AudioManager : MonoBehaviour
     //audio clip
     public AudioClip musicClip;
     public AudioClip healthClip;
-
+    public AudioClip expClip;
     private void Start()
     {
         musicAudioSource.clip = musicClip;
+        musicAudioSource.loop = true;
         musicAudioSource.Play();
     }
 
