@@ -3,7 +3,7 @@
 public class HealthItem : MonoBehaviour
 {
     public int healAmount = 4; // Lượng máu hồi phục
-   private AudioManager audioManager;
+    private AudioManager audioManager;
     [SerializeField] private GameObject heal;
     private EnemyAI enemy;
 
@@ -18,9 +18,9 @@ public class HealthItem : MonoBehaviour
         {
             PlayerControl player = collision.gameObject.GetComponent<PlayerControl>();
 
-            if (player.currentHealth < 10)
+            if (player.currentHealth < player.maxHealth)
             {              
-                player.ChangeHealth(Mathf.Min(healAmount, 10 - player.currentHealth));
+                player.ChangeHealth(Mathf.Min(healAmount, player.maxHealth - player.currentHealth));
 
                 if (audioManager != null)
                 {

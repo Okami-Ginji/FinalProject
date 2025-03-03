@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &3748773330010406248
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4348001047160172254, guid: 201538e0b77cda44c8ed8a398fb7314e, type: 3}
+      propertyPath: data.dataString
+      value: UEsDBBQAAAgIAAA4IeybjSy7WgIAABMFAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQF1VMtyGjEQ/BVK5+CCxY4htwRjnIMNZZzyZS9CmmVVaKUtPczDxb9npH2aVE6I7p6ZntFoP4lQtgTmtFkawZ81B/JjQMKZfBt05BMc6U6rjThDo3kX3OVBRKPmlTqhER+HMKsLcEawn2ong3iEoFci06ZY8B3MtXUW4YxKC0gZ7UK0QuhzQI74M5yFkBOekvtwOuNpNhpc8MhAOTCdtBE2skrlFZO0KIEHy524TXtbyRQ2UyuCcaalFLZ2QtypjJ1uyhwMhFa5oNhYrB7kOYhd7oLJfuwqyyy42pGhpwdhcD5VUvJLV0MrqN1Xtj6o9LF+Mo2WqqTP//DDcaQzo4unpu5scjNFzOWC7V/piVHremPtww9fnXt1oHJPtxLec1Avemm0VxxJZ3wI9RaSh+5v29s8B7bv8MprAzZ1ffn/2wldXGL/x7kUxTZQN7cVsJE6DjxeEhi8mt/oOG6GrVMgGmz8sfBGd/0VqolHYaxDqm5TBX9b7U2QkkWcWmjHu7k2CiJct1KCotKd1pjGXV/iFdcre8U80vBY6uI117yBq5AId/rR6Ipa60N7WzbXh2ew+co7KRR0pgPxgnOaa6WqHevPpAnbeJNR1gvbecG/Lheho2m2HSfJ9I5BMqF0eJckswlPRmN29/1+PAESt08o7JPKdWW0Hg/emuqSK1y05hsyWBpaxn3nhh6W4lzo3siFyvSGGQC1qjK0xsFgEXyWfMEFDmgDzgkV75t8pkRqtgeetonS2Oni6AxNuywpKcWHdgFJyTx+NFIS4HaZ1wY+BBxC8SbZhVz+AlBLAwQUAAAICAAAOCHspuYFlW0AAAB4AAAACQAkAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAatWKkstKs7Mz1OyUjDRM9IzNNdRUEovSizIKAaKGII4pZkpIHa0UqKBRVqSoZGRhWlyqpFxYqKuqZGRpXGKkYFhsqmZuaFxqlIsUH1JZUGqX2JuKkRPQGJJRlpmXkpmXrqee1FmijvIaKXYWgBQSwECLQAUAAAICAAAOCHsm40su1oCAAATBQAACwAkAAAAAAAAAAAAAAAAAAAAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwECLQAUAAAICAAAOCHspuYFlW0AAAB4AAAACQAkAAAAAAAAAAAAAACnAgAAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsFBgAAAAACAAIAuAAAAF8DAAAAAA==
+      objectReference: {fileID: 0}
+    - target: {fileID: 4476852026204250503, guid: 201538e0b77cda44c8ed8a398fb7314e, type: 3}
+      propertyPath: m_Name
+      value: A__Desert Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 6750641892062607414, guid: 201538e0b77cda44c8ed8a398fb7314e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6750641892062607414, guid: 201538e0b77cda44c8ed8a398fb7314e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6750641892062607414, guid: 201538e0b77cda44c8ed8a398fb7314e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6750641892062607414, guid: 201538e0b77cda44c8ed8a398fb7314e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6750641892062607414, guid: 201538e0b77cda44c8ed8a398fb7314e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6750641892062607414, guid: 201538e0b77cda44c8ed8a398fb7314e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6750641892062607414, guid: 201538e0b77cda44c8ed8a398fb7314e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6750641892062607414, guid: 201538e0b77cda44c8ed8a398fb7314e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6750641892062607414, guid: 201538e0b77cda44c8ed8a398fb7314e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6750641892062607414, guid: 201538e0b77cda44c8ed8a398fb7314e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 201538e0b77cda44c8ed8a398fb7314e, type: 3}
