@@ -29,7 +29,7 @@ public class EnemyAI : MonoBehaviour
     public GameObject targetChase;
 
     public ExpUI expUI;
-    public float enemyExp ;
+    public float enemyExp;
 
     public ScoreUI scoreUI;
     public int enemyScore = 100;
@@ -39,7 +39,10 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] EnemyHealthBar healthBar;
     //public SpriteRenderer characterSR;
 
-    public bool isShootable = false;
+    public bool isAttackable = false;
+    public float distanceToAttack;
+    public float stopDistance;
+
     public GameObject fireball;
     public float fireballSpeed;
     public float timeBtwfire;
@@ -53,14 +56,20 @@ public class EnemyAI : MonoBehaviour
 
     private bool alive = true;
 
-    public GameObject popupDamagePrefab;   
+    public int damgeForSeries;
 
-    private Vector3 localOffset;
+    public LayerMask playerLayer;
+
+    public GameObject popupDamagePrefab;
+
+
+    private Vector3 EnemyScale;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         anim = GetComponent<Animator>();
-        localOffset = firePos.transform.localPosition;
+        EnemyScale = transform.localScale;
         InvokeRepeating("CalculatePath", 0f, 0.5f);
         reachDestination = true;
         expUI =FindAnyObjectByType<ExpUI>();
@@ -68,7 +77,6 @@ public class EnemyAI : MonoBehaviour
         boxCollider2D = GetComponent<BoxCollider2D>();
         healthBar = GetComponentInChildren<EnemyHealthBar>();
         healthBar.UpdateEnemyHealth(currentHealth, maxHealth);
-
     }
 
     // Update is called once per frame
@@ -76,19 +84,22 @@ public class EnemyAI : MonoBehaviour
     {
         if (alive)
         {
-            if (isShootable && FindObjectOfType<PlayerControl>() != null)
+            if (FindObjectOfType<PlayerControl>() != null)
             {
-                cooldown -= Time.deltaTime;
-
-                if (cooldown < 0f)
+                Vector3 playerPos = FindObjectOfType<PlayerControl>().transform.position;
+                if (isAttackable &&  Vector2.Distance(transform.position, playerPos) <= distanceToAttack)
                 {
-                    cooldown = timeBtwfire;
-                    StartCoroutine(EnemyShootFireBall());
+                    cooldown -= Time.deltaTime;
+
+                    if (cooldown < 0f)
+                    {
+                        cooldown = timeBtwfire;
+                        anim.SetTrigger("attack");
+                    }
                 }
             }
         }
     }
-
     void CalculatePath()
     {
         if (FindObjectOfType<PlayerControl>() != null && alive)
@@ -120,19 +131,18 @@ public class EnemyAI : MonoBehaviour
     IEnumerator MoveToTargetCoroutine()
     {
 
-        int currentWP = 0;
-        float stopDistance = 2f;
+        int currentWP = 0;      
         Vector3 playerPos = FindObjectOfType<PlayerControl>().transform.position;
         while (currentWP < path.vectorPath.Count)
         {
 
             if (Vector2.Distance(transform.position, playerPos) <= stopDistance)
             {
-                anim.SetBool("isMove", true);
+                anim.SetBool("isMove", false);
                 yield return null;
                 continue;
             }
-            else anim.SetBool("isMove", false);
+            else anim.SetBool("isMove", true);
 
 
             Vector2 direction = ((Vector2)path.vectorPath[currentWP] - (Vector2)transform.position).normalized;
@@ -150,11 +160,11 @@ public class EnemyAI : MonoBehaviour
             {
                 if (force.x < 0)
                 {
-                    transform.localScale = new Vector3(-1.9f, 1.9f, 1);
+                    transform.localScale = new Vector3(-EnemyScale.x, EnemyScale.y, EnemyScale.z);
                 }
                 else
                 {
-                    transform.localScale = new Vector3(1.9f, 1.9f, 1);
+                    transform.localScale = new Vector3(EnemyScale.x, EnemyScale.y, EnemyScale.z);
                 }
 
             }
@@ -188,12 +198,9 @@ public class EnemyAI : MonoBehaviour
     //    rb.AddForce(direction.normalized * fireballSpeed, ForceMode2D.Impulse);
     //}
 
-    IEnumerator EnemyShootFireBall()
+    public void EnemyShootFireBall()
     {
-        anim.SetTrigger("attack");
-
-        yield return new WaitForSeconds(anim.GetCurrentAnimatorStateInfo(0).length);
-
+             
         var fireballTmp = Instantiate(fireball, firePos.position, Quaternion.identity);
         Rigidbody2D rb = fireballTmp.GetComponent<Rigidbody2D>();
         Vector3 playerPos = FindObjectOfType<PlayerControl>().transform.position;
@@ -205,11 +212,11 @@ public class EnemyAI : MonoBehaviour
     {
         currentHealth += amount;
         Debug.Log(transform.position);
-        GameObject instance = Instantiate(popupDamagePrefab,transform.position, Quaternion.identity);
+        GameObject instance = Instantiate(popupDamagePrefab, transform.position, Quaternion.identity);
         instance.GetComponentInChildren<TMP_Text>().text = amount.ToString();
         //valueText.text = amount.ToString();
 
-        healthBar.UpdateEnemyHealth(currentHealth,maxHealth);
+        healthBar.UpdateEnemyHealth(currentHealth, maxHealth);
 
         if (currentHealth <= 0)
         {
@@ -219,11 +226,12 @@ public class EnemyAI : MonoBehaviour
             {
                 expUI.UpdateBar(enemyExp);
             }
-            if (scoreUI != null) {
+            if (scoreUI != null)
+            {
                 scoreUI.AddScore(enemyScore);
             }
             boxCollider2D.enabled = false;
-                
+
         }
     }
 

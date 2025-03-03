@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - Audio
+  - EnemySeries
   layers:
   - Default
   - TransparentFX
@@ -13,7 +14,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Player
   - 
   - 
   - 
@@ -40,8 +41,14 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Water
+    uniqueID: 2115813555
+    locked: 0
   - name: Ground
     uniqueID: 1531662491
+    locked: 0
+  - name: Struct
+    uniqueID: 416702053
     locked: 0
   - name: Road
     uniqueID: 2210981683

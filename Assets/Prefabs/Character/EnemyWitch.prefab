@@ -593,13 +593,19 @@ MonoBehaviour:
   enemyScore: 100
   boxCollider2D: {fileID: 0}
   healthBar: {fileID: 0}
-  isShootable: 1
+  isAttackable: 1
+  distanceToAttack: 4
+  stopDistance: 2
   fireball: {fileID: 8788114609121302981, guid: 18f05d56052fb104e8ffacd48804c508, type: 3}
   fireballSpeed: 5
   timeBtwfire: 5
   firePos: {fileID: 1300192172563013577}
   currentHealth: 10
   maxHealth: 10
+  damgeForSeries: 0
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 0
   popupDamagePrefab: {fileID: 4353243798426777024, guid: d11471afd37dd1d4984f10de7af9b482, type: 3}
 --- !u!114 &2611177165635255035
 MonoBehaviour:
