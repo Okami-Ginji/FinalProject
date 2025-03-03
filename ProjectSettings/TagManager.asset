@@ -9,6 +9,7 @@ TagManager:
   - EnemySeries
   - Energy
   - HealthItem
+  - NumberAmo
   layers:
   - Default
   - TransparentFX
