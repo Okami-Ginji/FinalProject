@@ -7,6 +7,8 @@ TagManager:
   - Enemy
   - Audio
   - EnemySeries
+  - Energy
+  - HealthItem
   layers:
   - Default
   - TransparentFX
@@ -58,6 +60,12 @@ TagManager:
     locked: 0
   - name: Character
     uniqueID: 947609545
+    locked: 0
+  - name: Energy
+    uniqueID: 1102595739
+    locked: 0
+  - name: HealthItem
+    uniqueID: 3603729185
     locked: 0
   m_RenderingLayers:
   - Default

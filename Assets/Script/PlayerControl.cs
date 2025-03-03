@@ -12,6 +12,8 @@ public class PlayerControl : MonoBehaviour
     public float dashBoost = 5f;
     public float dashTime;
     private float _dashTime = 0.5f;
+    public float dashCooldown = 2f;
+    private float _dashCooldown = 0f;
     bool isDashing = false;
 
     public GameObject ghostEffect;
@@ -97,8 +99,7 @@ public class PlayerControl : MonoBehaviour
                 //transform.localScale = new Vector3(-0.2f, 0.2f, 0);
             }         
         }
-
-        if (Input.GetKeyDown(KeyCode.Space) && _dashTime <= 0 && isDashing == false)
+        if (Input.GetKeyDown(KeyCode.Space) && _dashTime <= 0 && isDashing == false && _dashCooldown <= 0)
         {
             movePower += dashBoost;
             _dashTime = dashTime;
@@ -109,12 +110,18 @@ public class PlayerControl : MonoBehaviour
         {
             movePower -= dashBoost;
             isDashing = false;
+            _dashCooldown = dashCooldown;
             StopDashEffect();
         }
         else
         {
             _dashTime -= Time.deltaTime;
-
+            
+        }
+        if (_dashCooldown > 0)
+        {
+            _dashCooldown -= Time.deltaTime; 
+            if (_dashCooldown < 0) _dashCooldown = 0; 
         }
 
         //âm thanh khi di chuyển
@@ -148,7 +155,7 @@ public class PlayerControl : MonoBehaviour
             GameObject ghost = Instantiate(ghostEffect, transform.position, transform.rotation);
             Sprite currentSprite = GetComponentInChildren<SpriteRenderer>().sprite;
             ghost.GetComponentInChildren<SpriteRenderer>().sprite = currentSprite;
-
+            ghost.transform.localScale = transform.localScale;
             Destroy(ghost, 0.5f);
             yield return new WaitForSeconds(ghostDelay);
         }
@@ -215,12 +222,22 @@ public class PlayerControl : MonoBehaviour
     }
     void FireBall()
     {
+      
+        if (ammoAmountCopy <= 0)
+        {          
+            return; 
+        }
+
         timeBtwFire = TimeBtwFire;
+
         GameObject fireballTmp = Instantiate(fireball, firePos.position, firePos.transform.rotation);
         Rigidbody2D rb = fireballTmp.GetComponent<Rigidbody2D>();
         rb.AddForce(firePos.right * fireballForce, ForceMode2D.Impulse);
-        ammoAmountCopy -= 1;       
-        ammo.transform.GetChild(ammoAmountCopy).gameObject.SetActive(false);
+        ammoAmountCopy--;
+        if (ammoAmountCopy >= 0 && ammoAmountCopy < ammo.transform.childCount)
+        {
+            ammo.transform.GetChild(ammoAmountCopy).gameObject.SetActive(false);
+        }
     }
 
     void Reload()
