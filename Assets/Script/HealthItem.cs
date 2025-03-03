@@ -4,6 +4,8 @@ public class HealthItem : MonoBehaviour
 {
     public int healAmount = 4; // Lượng máu hồi phục
    private AudioManager audioManager;
+    [SerializeField] private GameObject heal;
+    private EnemyAI enemy;
 
     private void Awake()
     {
@@ -17,8 +19,7 @@ public class HealthItem : MonoBehaviour
             PlayerControl player = collision.gameObject.GetComponent<PlayerControl>();
 
             if (player.currentHealth < 10)
-            {
-                // Hồi máu nhưng không vượt quá 150
+            {              
                 player.ChangeHealth(Mathf.Min(healAmount, 10 - player.currentHealth));
 
                 if (audioManager != null)
@@ -26,8 +27,13 @@ public class HealthItem : MonoBehaviour
                     audioManager.PlaySFX(audioManager.healthClip);
                 }
 
-                Destroy(gameObject);
+                Destroy(heal);
             }
+        }
+        if (collision.CompareTag("Enemy"))
+        {
+            if (enemy.currentHealth <= 0)
+                Instantiate(heal, enemy.transform.position, Quaternion.identity);
         }
     }
 }

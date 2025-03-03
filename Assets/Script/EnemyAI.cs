@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using Pathfinding;
 using ClearSky;
 using System.Collections;
@@ -28,8 +28,9 @@ public class EnemyAI : MonoBehaviour
 
     public GameObject targetChase;
 
-    public ExpUI expUI;
-    public float enemyExp;
+    [SerializeField] private GameObject energyObject;
+    [SerializeField] private GameObject heal;
+
 
     public ScoreUI scoreUI;
     public int enemyScore = 100;
@@ -61,9 +62,14 @@ public class EnemyAI : MonoBehaviour
     public LayerMask playerLayer;
 
     public GameObject popupDamagePrefab;
-
-
     private Vector3 EnemyScale;
+
+    //knockback
+    public float knockbackTime = 0.2f;
+    public float knockbackForce = 15f;
+    public bool gettingKnockback = false;
+
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -72,11 +78,13 @@ public class EnemyAI : MonoBehaviour
         EnemyScale = transform.localScale;
         InvokeRepeating("CalculatePath", 0f, 0.5f);
         reachDestination = true;
-        expUI =FindAnyObjectByType<ExpUI>();
+
         scoreUI = FindAnyObjectByType<ScoreUI>();
         boxCollider2D = GetComponent<BoxCollider2D>();
         healthBar = GetComponentInChildren<EnemyHealthBar>();
         healthBar.UpdateEnemyHealth(currentHealth, maxHealth);
+
+        rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -87,7 +95,7 @@ public class EnemyAI : MonoBehaviour
             if (FindObjectOfType<PlayerControl>() != null)
             {
                 Vector3 playerPos = FindObjectOfType<PlayerControl>().transform.position;
-                if (isAttackable &&  Vector2.Distance(transform.position, playerPos) <= distanceToAttack)
+                if (isAttackable && Vector2.Distance(transform.position, playerPos) <= distanceToAttack)
                 {
                     cooldown -= Time.deltaTime;
 
@@ -99,7 +107,9 @@ public class EnemyAI : MonoBehaviour
                 }
             }
         }
+
     }
+
     void CalculatePath()
     {
         if (FindObjectOfType<PlayerControl>() != null && alive)
@@ -131,7 +141,7 @@ public class EnemyAI : MonoBehaviour
     IEnumerator MoveToTargetCoroutine()
     {
 
-        int currentWP = 0;      
+        int currentWP = 0;
         Vector3 playerPos = FindObjectOfType<PlayerControl>().transform.position;
         while (currentWP < path.vectorPath.Count)
         {
@@ -144,29 +154,31 @@ public class EnemyAI : MonoBehaviour
             }
             else anim.SetBool("isMove", true);
 
-
-            Vector2 direction = ((Vector2)path.vectorPath[currentWP] - (Vector2)transform.position).normalized;
-            Vector2 force = direction * moveSpeed * Time.deltaTime;
-            transform.position += (Vector3)force;
-
-            float distance = Vector2.Distance(transform.position, path.vectorPath[currentWP]);
-            if (distance < nextWPDistance)
+            if (!gettingKnockback)
             {
-                currentWP++;
-            }
+                Vector2 direction = ((Vector2)path.vectorPath[currentWP] - (Vector2)transform.position).normalized;
+                Vector2 force = direction * moveSpeed * Time.deltaTime;
+                transform.position += (Vector3)force;
 
-
-            if (force.x != 0)
-            {
-                if (force.x < 0)
+                float distance = Vector2.Distance(transform.position, path.vectorPath[currentWP]);
+                if (distance < nextWPDistance)
                 {
-                    transform.localScale = new Vector3(-EnemyScale.x, EnemyScale.y, EnemyScale.z);
-                }
-                else
-                {
-                    transform.localScale = new Vector3(EnemyScale.x, EnemyScale.y, EnemyScale.z);
+                    currentWP++;
                 }
 
+
+                if (force.x != 0)
+                {
+                    if (force.x < 0)
+                    {
+                        transform.localScale = new Vector3(-EnemyScale.x, EnemyScale.y, EnemyScale.z);
+                    }
+                    else
+                    {
+                        transform.localScale = new Vector3(EnemyScale.x, EnemyScale.y, EnemyScale.z);
+                    }
+
+                }
             }
             yield return null;
         }
@@ -200,7 +212,7 @@ public class EnemyAI : MonoBehaviour
 
     public void EnemyShootFireBall()
     {
-             
+
         var fireballTmp = Instantiate(fireball, firePos.position, Quaternion.identity);
         Rigidbody2D rb = fireballTmp.GetComponent<Rigidbody2D>();
         Vector3 playerPos = FindObjectOfType<PlayerControl>().transform.position;
@@ -208,24 +220,29 @@ public class EnemyAI : MonoBehaviour
         rb.AddForce(direction.normalized * fireballSpeed, ForceMode2D.Impulse);
     }
 
-    public void ChangeHealth(int amount)
+
+
+    public void ChangeHealth(int amount, Vector3 damageSource)
     {
         currentHealth += amount;
-        Debug.Log(transform.position);
+        //Debug.Log(transform.position);
         GameObject instance = Instantiate(popupDamagePrefab, transform.position, Quaternion.identity);
         instance.GetComponentInChildren<TMP_Text>().text = amount.ToString();
         //valueText.text = amount.ToString();
 
         healthBar.UpdateEnemyHealth(currentHealth, maxHealth);
+        if (amount <= 0)
+        {
+            getKnockback(damageSource);
+        }
 
         if (currentHealth <= 0)
         {
+            DropItems();
+
+
             alive = false;
             anim.SetTrigger("die");
-            if (expUI != null)
-            {
-                expUI.UpdateBar(enemyExp);
-            }
             if (scoreUI != null)
             {
                 scoreUI.AddScore(enemyScore);
@@ -233,6 +250,39 @@ public class EnemyAI : MonoBehaviour
             boxCollider2D.enabled = false;
 
         }
+    }
+    private void DropItems()
+    {
+        Vector3 dropOffset = new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(0.3f, 0.8f), 0);
+
+        
+        if (energyObject != null)
+        {
+            Instantiate(energyObject, transform.position + dropOffset, Quaternion.identity);
+        }
+
+        
+       
+        if ( heal != null)
+        {
+            Instantiate(heal, transform.position + dropOffset, Quaternion.identity);
+        }
+    }
+
+    public void getKnockback(Vector3 damageSource)
+    {
+        if (rb == null) return;
+
+        gettingKnockback = true;
+        Vector3 diff = (transform.position - damageSource).normalized * knockbackForce;
+        rb.AddForce(diff, ForceMode2D.Impulse);
+        StartCoroutine(knockbackCoroutine());
+    }
+    private IEnumerator knockbackCoroutine()
+    {
+        yield return new WaitForSeconds(knockbackTime);
+        rb.linearVelocity = Vector3.zero;
+        gettingKnockback = false;
     }
 
     public void WaitAndDisable()

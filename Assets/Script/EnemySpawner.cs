@@ -1,4 +1,5 @@
-using UnityEngine;
+﻿using UnityEngine;
+using System.Collections;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -6,23 +7,40 @@ public class EnemySpawner : MonoBehaviour
     private GameObject enemyPrefab;
 
     [SerializeField]
-    private float spawnTime = 10.0f;
+    private float spawnIntervalse = 10.0f; 
 
-    private float timeUntilSpawn;
+    private static bool isFirstSpawned = false; 
+    private static int spawnOrderCounter = 0; 
+    private static float delayBetweenSpawns = 5.0f; 
 
-    private void Awake()
+    private int spawnOrder; 
+
+    private void Start()
     {
-        timeUntilSpawn = spawnTime; // Initialize the spawn timer
+        spawnOrder = spawnOrderCounter++; 
+        StartCoroutine(SpawnWithDelay());
     }
 
-    private void Update()
+    private IEnumerator SpawnWithDelay()
     {
-
-        timeUntilSpawn -= Time.deltaTime;
-        if (timeUntilSpawn <= 0)
+        if (!isFirstSpawned)
         {
+            
             SpawnEnemy();
-            timeUntilSpawn = spawnTime;
+            isFirstSpawned = true;
+            yield return new WaitForSeconds(5f); 
+        }
+        else
+        {
+            
+            yield return new WaitForSeconds(spawnOrder * delayBetweenSpawns);
+        }
+
+        
+        while (true)
+        {
+            yield return new WaitForSeconds(spawnIntervalse);
+            SpawnEnemy();
         }
     }
 
