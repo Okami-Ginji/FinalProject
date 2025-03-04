@@ -32,21 +32,14 @@ public class GoblinSpawn : MonoBehaviour
     List<Vector3Int> GetAllTilePositions(Tilemap SpawnCoordinate)
     {
         List<Vector3Int> tilePositions = new List<Vector3Int>();
-        BoundsInt bounds = SpawnCoordinate.cellBounds;
-
-        for (int x = bounds.xMin; x < bounds.xMax; x++)
+        foreach (Vector3Int pos in SpawnCoordinate.cellBounds.allPositionsWithin)
         {
-            for (int y = bounds.yMin; y < bounds.yMax; y++)
+            if (SpawnCoordinate.HasTile(pos))
             {
-                Vector3Int cellPosition = new Vector3Int(x, y, 0);
-
-                if (SpawnCoordinate.HasTile(cellPosition))
-                {
-                    tilePositions.Add(cellPosition);
-                }
+                tilePositions.Add(pos);
             }
         }
-
         return tilePositions;
     }
+
 }
