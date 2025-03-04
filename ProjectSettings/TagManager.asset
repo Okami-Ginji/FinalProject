@@ -59,20 +59,20 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Character
-    uniqueID: 947609545
-    locked: 0
   - name: Energy
     uniqueID: 1102595739
     locked: 0
   - name: HealthItem
     uniqueID: 3603729185
     locked: 0
-  - name: Ma
-    uniqueID: 2803617021
+  - name: Character
+    uniqueID: 947609545
     locked: 0
   - name: Struct
     uniqueID: 416702053
+    locked: 0
+  - name: Ma
+    uniqueID: 2803617021
     locked: 0
   m_RenderingLayers:
   - Default
