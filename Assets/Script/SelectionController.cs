@@ -66,7 +66,13 @@ public class SelectionController : MonoBehaviour
     }
     public void PlayGame()
     {
+        string mapName = MapSellectionController.instance.mapName;
         selectedPlayer = selectedGameObject[selectedCharacter];
-        SceneManager.LoadScene("Map");
+        SceneManager.LoadScene(mapName);
+    }
+
+    public void BackScreen()
+    {
+        SceneManager.LoadScene("ChooseMap");
     }
 }

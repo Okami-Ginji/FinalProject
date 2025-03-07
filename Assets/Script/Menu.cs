@@ -62,7 +62,7 @@ public class Menu : MonoBehaviour
         Time.timeScale = 0f;
         GamePause = true;
         audioManager.musicAudioSource.Pause();
-        //playerControl.footstepSound.Pause();
+        playerControl.footstepSound.Pause();
     }
 
     public void LoadMenu()
