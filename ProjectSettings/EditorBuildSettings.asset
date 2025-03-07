@@ -9,11 +9,23 @@ EditorBuildSettings:
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
+    path: Assets/Scenes/Menu.unity
+    guid: 79f4b584f9f60f44d949718c60ff6587
+  - enabled: 1
+    path: Assets/Scenes/ChooseMap.unity
+    guid: 5fdbcf27505fd8e44a7e84dd4b21309a
+  - enabled: 1
     path: Assets/Scenes/ChooseCharacter.unity
     guid: cbd87306844dd4f4baa58b4517b54cfa
   - enabled: 1
-    path: Assets/Scenes/Map.unity
+    path: Assets/Scenes/Meadow.unity
     guid: ff248f5a76ab88c4dba14bb9a4063631
+  - enabled: 1
+    path: Assets/Scenes/Rock.unity
+    guid: 1826ab4c705c8b649b73141ac132c2e6
+  - enabled: 1
+    path: Assets/Scenes/Desert.unity
+    guid: 7e3a54c7a89ca424984aaa4eeaa5b988
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 3590b91b4603b465dbb4216d601bff33, type: 3}
   m_UseUCBPForAssetBundles: 0
