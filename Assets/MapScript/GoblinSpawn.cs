@@ -32,6 +32,7 @@ public class GoblinSpawn : MonoBehaviour
     List<Vector3Int> GetAllTilePositions(Tilemap SpawnCoordinate)
     {
         List<Vector3Int> tilePositions = new List<Vector3Int>();
+
         foreach (Vector3Int pos in SpawnCoordinate.cellBounds.allPositionsWithin)
         {
             if (SpawnCoordinate.HasTile(pos))
