@@ -73,6 +73,8 @@ public class SelectionController : MonoBehaviour
 
     public void BackScreen()
     {
+        Destroy(MapSellectionController.instance.gameObject);
+        Destroy(gameObject);
         SceneManager.LoadScene("ChooseMap");
     }
 }

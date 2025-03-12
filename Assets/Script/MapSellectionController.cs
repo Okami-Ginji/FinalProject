@@ -66,7 +66,9 @@ public class MapSellectionController : MonoBehaviour
     }
 
     public void BackScreen()
-    {        
+    {
+        Destroy(gameObject);
         SceneManager.LoadScene("Menu");
+
     }
 }
