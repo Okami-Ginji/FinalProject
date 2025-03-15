@@ -13,7 +13,7 @@ public class GoblinTNT : MonoBehaviour
     public bool isAttackable = false;
     public float distanceToAttack;
     public float timeBtwfire;
-    public Transform dynamidPos;
+    public Transform dynamidPos; 
     void Start()
     {
         anim = GetComponent<Animator>();

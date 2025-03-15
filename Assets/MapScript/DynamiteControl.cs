@@ -3,7 +3,9 @@
 public class DynamidControl : MonoBehaviour
 {
    
-    private Animator anim; 
+    private Animator anim;
+    public int damage;
+    public float damgeForce;
 
     void Start()
     {
@@ -18,7 +20,9 @@ public class DynamidControl : MonoBehaviour
             
             anim.SetBool("isBoom", false);
 
-            
+            other.gameObject.GetComponent<PlayerControl>().ChangeHealth(-damage);
+            other.gameObject.GetComponent<PlayerControl>().Hurt(damgeForce);
+
             Rigidbody2D rb = GetComponent<Rigidbody2D>();
             if (rb != null)
             {

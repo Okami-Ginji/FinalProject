@@ -44,6 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ccd553f4e3b75a45890f9360ff84290, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 8708207090835242179, guid: b8d0e60984f466b48b6b7a5cbe3c78b1, type: 3}
-  minimumSpawnTime: 2
-  maximumSpawnTime: 5
+  EnemySeriesPrefab: {fileID: 1960861135892039544, guid: 747c3cfc6726e21418f69b43dfd836a6, type: 3}
+  EnemyPrefab: {fileID: 8708207090835242179, guid: b8d0e60984f466b48b6b7a5cbe3c78b1, type: 3}
+  bossPrefab: {fileID: 6911791671568544694, guid: 149a0b2bc739dbe47860bda6fe49b0aa, type: 3}
+  despawnDistance: 15
+  spawnDistance: 9

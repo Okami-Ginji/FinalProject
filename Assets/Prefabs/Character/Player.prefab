@@ -1198,14 +1198,13 @@ MonoBehaviour:
   ghostDelay: 0.05
   fireball: {fileID: 2538063348152048904, guid: e5d04436466882b4bacb726418c97512, type: 3}
   firePos: {fileID: 9073704808104333790}
-  TimeBtwFire: 0.2
+  TimeBtwFire: 0.5
   fireballForce: 20
   currentHealth: 100
   maxHealth: 100
   ammo: {fileID: 3340300600828913497, guid: b4268eb1ee014b641ba5c5f5c3577e41, type: 3}
   timeToReload: 10
   healthBar: {fileID: 0}
-  footstepSound: {fileID: -3241156699805170668}
 --- !u!82 &-3241156699805170668
 AudioSource:
   m_ObjectHideFlags: 0
