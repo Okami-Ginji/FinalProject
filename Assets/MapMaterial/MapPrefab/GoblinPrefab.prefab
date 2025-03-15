@@ -102,9 +102,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Dynamidprefab: {fileID: 7449023552408899384, guid: d4309b1cb6ce73541810006055ba0948, type: 3}
-  dynamidSpeed: 20
+  dynamidSpeed: 10
   isAttackable: 1
-  distanceToAttack: 10000000
+  distanceToAttack: 10
   timeBtwfire: 5
   dynamidPos: {fileID: 0}
 --- !u!95 &6654346831040151631

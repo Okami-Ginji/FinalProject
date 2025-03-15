@@ -47,7 +47,7 @@ public class PlayerControl : MonoBehaviour
     public HealthBar healthBar;
 
     // âm thanh bước chân
-    public AudioSource footstepSound;
+    //public AudioSource footstepSound;
 
     private Vector3 playerScale;
 
@@ -124,18 +124,18 @@ public class PlayerControl : MonoBehaviour
             if (_dashCooldown < 0) _dashCooldown = 0; 
         }
 
-        //âm thanh khi di chuyển
-        if (moveVelocity.magnitude > 0)
-        {
-            if (!footstepSound.isPlaying)
-            {
-                footstepSound.Play();
-            }
-        }
-        else
-        {
-            footstepSound.Stop();
-        }
+        ////âm thanh khi di chuyển
+        //if (moveVelocity.magnitude > 0)
+        //{
+        //    if (!footstepSound.isPlaying)
+        //    {
+        //        footstepSound.Play();
+        //    }
+        //}
+        //else
+        //{
+        //    footstepSound.Stop();
+        //}
     }
     void StopDashEffect()
     {

@@ -597,7 +597,7 @@ MonoBehaviour:
   distanceToAttack: 4
   stopDistance: 2
   fireball: {fileID: 8788114609121302981, guid: 18f05d56052fb104e8ffacd48804c508, type: 3}
-  fireballSpeed: 5
+  fireballSpeed: 10
   timeBtwfire: 5
   firePos: {fileID: 1300192172563013577}
   currentHealth: 10
