@@ -5,5 +5,8 @@ using UnityEngine.UI;
 public class Map
 {
     public Sprite mapSprites;
-    public string name;    
+    public string name;
+    //new
+    public bool isUnlocked;
+    public int unlockCost;
 }

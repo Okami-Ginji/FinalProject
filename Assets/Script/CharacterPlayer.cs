@@ -8,7 +8,8 @@ public class CharacterPlayer
     public string name;
     public Vector3 selectionScale;
     public Vector3 selectionLocation;
-    public Vector3 gameScale;       
+    public Vector3 gameScale;
+    
 }
 
 public static class CharacterSelectionData
