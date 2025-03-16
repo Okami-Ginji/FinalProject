@@ -46,6 +46,8 @@ public class PlayerControl : MonoBehaviour
 
     public HealthBar healthBar;
 
+    public GameObject reloadAmoEffect;
+
     // âm thanh bước chân
     //public AudioSource footstepSound;
 
@@ -84,7 +86,7 @@ public class PlayerControl : MonoBehaviour
         Vector3 moveVelocity = Vector3.zero;
         moveVelocity.x = Input.GetAxis("Horizontal");
         moveVelocity.y = Input.GetAxis("Vertical");
-        transform.position += moveVelocity * movePower * Time.deltaTime;
+        transform.position += moveVelocity * movePower * Time.deltaTime;      
         anim.SetFloat("speed", moveVelocity.sqrMagnitude);
         if (moveVelocity.x != 0)
         {
@@ -198,8 +200,13 @@ public class PlayerControl : MonoBehaviour
             cooldown -= Time.deltaTime;
             if (cooldown < 0f)
             {
+                reloadAmoEffect.SetActive(false);
                 cooldown = timeToReload;
                 Reload();
+            }
+            else
+            {
+                reloadAmoEffect.SetActive(true);
             }
             
         }
