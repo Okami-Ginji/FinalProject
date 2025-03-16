@@ -8,5 +8,5 @@ public class Map
     public string name;
     //new
     public bool isUnlocked;
-    public int unlockCost;
+   
 }

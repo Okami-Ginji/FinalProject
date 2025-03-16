@@ -9,7 +9,8 @@ public class CharacterPlayer
     public Vector3 selectionScale;
     public Vector3 selectionLocation;
     public Vector3 gameScale;
-    
+    public bool isUnlocked;
+    public int unlockCost;
 }
 
 public static class CharacterSelectionData

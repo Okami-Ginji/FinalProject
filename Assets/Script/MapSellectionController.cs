@@ -11,11 +11,13 @@ public class MapSellectionController : MonoBehaviour
 
     public List<Map> mapSprites;
     public Image mapImage;
+    public Image lockImage;
+    public Button chooseCharacterButton;
     private int selectedMap = 0;
     public TextMeshProUGUI nameText;
     public string mapName;
 
-    public Button unlockButton;
+    //public Button unlockButton;
 
     public CharacterPlayer selectedPlayer;
      
@@ -39,7 +41,7 @@ public class MapSellectionController : MonoBehaviour
     private void Start()
     {
         LoadUnlockedMaps();
-        CoinDisplay();
+        //CoinDisplay();
         changeMap(mapSprites[selectedMap]);
     }
 
@@ -70,53 +72,70 @@ public class MapSellectionController : MonoBehaviour
 
         if (map.isUnlocked)
         {
-            unlockButton.gameObject.SetActive(false);
+            lockImage.gameObject.SetActive(false);
+            chooseCharacterButton.interactable = true;
         }
         else
         {
-            unlockButton.gameObject.SetActive(true);
+            lockImage.gameObject.SetActive(true);
+            chooseCharacterButton.interactable = false;
         }
     }
 
     public void UnlockMap()
-    {
-        int playerCoins = PlayerPrefs.GetInt("PlayerCoins", 0); 
-        int cost = mapSprites[selectedMap].unlockCost;
-
-        if (playerCoins >= cost)
-        {
-            playerCoins -= cost;
-            PlayerPrefs.SetInt("PlayerCoins", playerCoins);
-            PlayerPrefs.Save();
-
+    {      
+                  
             PlayerPrefs.SetInt("Map_" + selectedMap + "_Unlocked", 1);
             PlayerPrefs.Save();
 
-            mapSprites[selectedMap].isUnlocked = true; 
-            unlockButton.gameObject.SetActive(false); 
-
-            changeMap(mapSprites[selectedMap]); 
-
-            CoinDisplay(); 
-        }
-        else
-        {
-            StartCoroutine(ShowMessage("Bơm tiền vào mà mua =))", 5f));
-            Debug.Log("Không đủ coins để mở khóa map này! Cần ít nhất 1000 coins.");
-        }
+            mapSprites[selectedMap].isUnlocked = true;
+            lockImage.gameObject.SetActive(false);
+            chooseCharacterButton.interactable = true;
+            //changeMap(mapSprites[selectedMap]); 
+         
+       
     }
+
+    //public void UnlockMap()
+    //{
+    //    int playerCoins = PlayerPrefs.GetInt("PlayerCoins", 0);
+    //    int cost = mapSprites[selectedMap].unlockCost;
+
+    //    if (playerCoins >= cost)
+    //    {
+    //        playerCoins -= cost;
+    //        PlayerPrefs.SetInt("PlayerCoins", playerCoins);
+    //        PlayerPrefs.Save();
+
+    //        PlayerPrefs.SetInt("Map_" + selectedMap + "_Unlocked", 1);
+    //        PlayerPrefs.Save();
+
+    //        mapSprites[selectedMap].isUnlocked = true;
+    //        //unlockButton.gameObject.SetActive(false); 
+
+    //        //changeMap(mapSprites[selectedMap]); 
+
+    //        CoinDisplay();
+    //    }
+    //    else
+    //    {
+    //        StartCoroutine(ShowMessage("Bơm tiền vào mà mua =))", 5f));
+    //        Debug.Log("Không đủ coins để mở khóa map này! Cần ít nhất 1000 coins.");
+    //    }
+    //}
 
     private void LoadUnlockedMaps()
     {
-        for (int i = 0; i < mapSprites.Count; i++)
+        for (int i = 1; i < mapSprites.Count; i++)
         {
             bool isUnlocked = PlayerPrefs.GetInt("Map_" + i + "_Unlocked", 0) == 1;
             mapSprites[i].isUnlocked = isUnlocked;
 
             if (isUnlocked)
             {
-                unlockButton.gameObject.SetActive(false);
-            }
+                lockImage.gameObject.SetActive(false);
+                chooseCharacterButton.interactable = true;
+            }                    
         }
     }
 
@@ -156,6 +175,12 @@ public class MapSellectionController : MonoBehaviour
     {
         Destroy(gameObject);
         SceneManager.LoadScene("Menu");
+    }
+
+    public void clearData()
+    {
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.Save();
     }
 }
 
