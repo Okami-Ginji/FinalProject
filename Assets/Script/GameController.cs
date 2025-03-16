@@ -39,7 +39,7 @@ public class GameController : MonoBehaviour
             {
                 target = characterTmp.transform,
                 weight = 1f,
-                radius = 3f
+                radius = 4f
             };
 
             List<CinemachineTargetGroup.Target> targets = new List<CinemachineTargetGroup.Target>(targetGroup.m_Targets);
