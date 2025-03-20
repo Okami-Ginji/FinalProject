@@ -1056,7 +1056,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &624274284
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1990,6 +1990,8 @@ MonoBehaviour:
     selectionScale: {x: 0, y: 0, z: 0}
     selectionLocation: {x: 0, y: 0, z: 0}
     gameScale: {x: 0, y: 0, z: 0}
+    isUnlocked: 0
+    unlockCost: 0
   warningText: {fileID: 0}
   coinText: {fileID: 0}
 --- !u!1 &970692524
