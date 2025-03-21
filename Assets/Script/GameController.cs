@@ -1,4 +1,4 @@
-/*using Cinemachine;*/
+using Cinemachine;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -8,7 +8,7 @@ public class GameController : MonoBehaviour
     public GameObject gameOverScreen;
     public GameObject pauseMenu;
     public GameOver gameOver;
-    /*public CinemachineTargetGroup targetGroup;*/
+    public CinemachineTargetGroup targetGroup;
 
     private PlayerControl playerControl;
     private AudioManager audioManager;
@@ -17,11 +17,11 @@ public class GameController : MonoBehaviour
     void Start()
     {
         Time.timeScale = 1f;
-       /* PlayerSpawn();*/
+       PlayerSpawn();
         playerControl = FindObjectOfType<PlayerControl>();
         audioManager = FindObjectOfType<AudioManager>();
     }
-    /*
+    
     private void PlayerSpawn()
     {
         GameObject characterPrefab = SelectionController.instance.selectedPlayer.prefab;
@@ -47,7 +47,7 @@ public class GameController : MonoBehaviour
             targetGroup.m_Targets = targets.ToArray();
         }
     }
-    */
+    
     private void Update()
     {
         if(FindObjectOfType<PlayerControl>() == null)
