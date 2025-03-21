@@ -58310,7 +58310,7 @@ Tilemap:
       - {fileID: 4769841253974570741, guid: 9db631529f9e18943abb93bd4e84e03f, type: 3}
       - {fileID: 812967347838738160, guid: 9db631529f9e18943abb93bd4e84e03f, type: 3}
       - {fileID: 3421409182280049013, guid: 9db631529f9e18943abb93bd4e84e03f, type: 3}
-      m_AnimationSpeed: 10
+      m_AnimationSpeed: 10.000001
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 56, y: 5, z: 0}
