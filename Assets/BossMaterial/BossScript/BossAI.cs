@@ -1,6 +1,7 @@
 using Pathfinding;
 using System.Collections;
 using TMPro;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
 
@@ -25,8 +26,9 @@ public class BossAI : MonoBehaviour
     Rigidbody2D rb;
 
     public GameObject targetChase;
-
-
+    public float timeBtwSpell;
+    private float spellcooldown;
+    public GameObject spell;
 
 
 
@@ -78,7 +80,7 @@ public class BossAI : MonoBehaviour
         boxCollider2D = GetComponent<BoxCollider2D>();
         healthBar = GetComponentInChildren<EnemyHealthBar>();
         healthBar.UpdateEnemyHealth(currentHealth, maxHealth);
-
+        spellcooldown = 10f;
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -93,15 +95,35 @@ public class BossAI : MonoBehaviour
                 if (isAttackable && Vector2.Distance(transform.position, playerPos) <= distanceToAttack)
                 {
                     cooldown -= Time.deltaTime;
+                    spellcooldown -= Time.deltaTime;
 
                     if (cooldown < 0f)
                     {
                         cooldown = timeBtwfire;
                         anim.SetTrigger("attack");
+                        if (spellcooldown < 0f)
+                        {
+
+                            if (moveCoroutine != null) StopCoroutine(moveCoroutine);
+                            spellcooldown = timeBtwSpell;
+                            anim.SetTrigger("castSpell");
+                        }
+                        float distanceToPlayer = Vector2.Distance(transform.position, playerPos);
+                        if (distanceToPlayer > 10f)
+                        {
+                            if (moveCoroutine != null) StopCoroutine(moveCoroutine);
+
+                            anim.SetTrigger("teleport");
+
+                            anim.SetTrigger("attack");
+                        }
                     }
+
+
                 }
             }
         }
+
     }
 
     void CalculatePath()
@@ -257,5 +279,81 @@ public class BossAI : MonoBehaviour
     public void WaitAndDisable()
     {
         gameObject.SetActive(false);
+    }
+
+    private Vector3 GetSpawnPosition(PlayerControl player)
+    {
+        float spawnDistance = 5f;
+        if (player == null) return transform.position;
+        float angle = Random.Range(0f, 360f) * Mathf.Deg2Rad;
+        Vector3 offset = new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0) * spawnDistance;
+
+
+        return player.transform.position + offset;
+
+    }
+
+
+   
+
+    public void CastSpellToPlayer()
+    {
+
+
+        PlayerControl player = FindObjectOfType<PlayerControl>();
+        if (player != null)
+        {
+            player.movePower = 0f;
+            var spellTmp = Instantiate(spell, player.transform.position + new Vector3(0f, 2.3f, 0f), Quaternion.identity);
+            // Teleport to player position
+            StartCoroutine(ResetPlayerAfterDelay(player, 2.5f, spellTmp));
+        }
+    }
+
+    private IEnumerator ResetPlayerAfterDelay(PlayerControl player, float delay, GameObject spellTmp)
+    {
+        yield return new WaitForSeconds(delay);
+
+        if (spellTmp != null)
+            Destroy(spellTmp); 
+
+        if (player != null)
+            player.movePower = 5f;
+    }
+
+    public void TeleportToPlayer()
+    {
+
+
+        PlayerControl player = FindObjectOfType<PlayerControl>();
+        if (player != null)
+        {
+            // Stop current movement
+            //if (moveCoroutine != null) StopCoroutine(moveCoroutine);
+
+            // Get player position
+
+            //Vector3 playerPos = GetSpawnPosition(player)
+            Vector3 playerPos = GetSpawnPosition(player);
+
+            // Teleport to player position
+            transform.position = playerPos;
+
+            // Optional: Add a slight offset so boss doesn't spawn directly on player
+
+            //transform.position = playerPos + new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0f);
+
+            // Reset pathfinding
+            reachDestination = true;
+
+            // Start cooldown
+            Debug.Log("Teleport");
+
+            anim.ResetTrigger("teleport");
+            // Optional: Trigger animation if you have one
+            //anim.SetTrigger("teleport"); // Make sure to add this trigger to your animator if you use it
+        }
+
+
     }
 }
