@@ -452,15 +452,17 @@ MonoBehaviour:
   nextWPDistance: 0.3
   updateContinuesPath: 1
   targetChase: {fileID: 4233578485281666690, guid: 188c39a15c39a324697cde1a0263f64b, type: 3}
+  timeBtwSpell: 5
+  spell: {fileID: 154687440192454508, guid: 85f93d7119d65c845b802b2d6f858c34, type: 3}
   scoreUI: {fileID: 0}
   enemyScore: 1000
   boxCollider2D: {fileID: 0}
   healthBar: {fileID: 0}
   isAttackable: 1
-  distanceToAttack: 4
+  distanceToAttack: 20
   stopDistance: 2
-  fireball: {fileID: 8788114609121302981, guid: 18f05d56052fb104e8ffacd48804c508, type: 3}
-  fireballSpeed: 4
+  fireball: {fileID: 4579289615185893721, guid: 3d4d1826056625e409c80a9605fcb56b, type: 3}
+  fireballSpeed: 10
   timeBtwfire: 2
   firePos: {fileID: 58508415433047652}
   currentHealth: 1000
@@ -583,7 +585,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 7
 --- !u!61 &-847496907190909030
 BoxCollider2D:
   m_ObjectHideFlags: 0
