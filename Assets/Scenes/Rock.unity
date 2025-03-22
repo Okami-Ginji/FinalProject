@@ -4663,7 +4663,7 @@ TilemapRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ed38af550811550429e04f0776d5e2bc, type: 2}
+  - {fileID: 2100000, guid: 9579b75480af6a347b775dba181c5d1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -52180,6 +52180,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemySpawner (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 6457625200131978678, guid: 0771e6f9100775d4d88035d5c2ac892f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6594071204478083496, guid: 0771e6f9100775d4d88035d5c2ac892f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 16.74
@@ -52469,6 +52473,10 @@ PrefabInstance:
     - target: {fileID: 6457625200131978678, guid: 0771e6f9100775d4d88035d5c2ac892f, type: 3}
       propertyPath: m_Name
       value: EnemySpawner (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6457625200131978678, guid: 0771e6f9100775d4d88035d5c2ac892f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6594071204478083496, guid: 0771e6f9100775d4d88035d5c2ac892f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -53144,6 +53152,10 @@ PrefabInstance:
     - target: {fileID: 6457625200131978678, guid: 0771e6f9100775d4d88035d5c2ac892f, type: 3}
       propertyPath: m_Name
       value: EnemySpawner
+      objectReference: {fileID: 0}
+    - target: {fileID: 6457625200131978678, guid: 0771e6f9100775d4d88035d5c2ac892f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6594071204478083496, guid: 0771e6f9100775d4d88035d5c2ac892f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -58310,7 +58322,7 @@ Tilemap:
       - {fileID: 4769841253974570741, guid: 9db631529f9e18943abb93bd4e84e03f, type: 3}
       - {fileID: 812967347838738160, guid: 9db631529f9e18943abb93bd4e84e03f, type: 3}
       - {fileID: 3421409182280049013, guid: 9db631529f9e18943abb93bd4e84e03f, type: 3}
-      m_AnimationSpeed: 10.000001
+      m_AnimationSpeed: 10
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 56, y: 5, z: 0}
@@ -59582,6 +59594,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemySpawner (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 6457625200131978678, guid: 0771e6f9100775d4d88035d5c2ac892f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6594071204478083496, guid: 0771e6f9100775d4d88035d5c2ac892f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 16.74
@@ -59638,6 +59654,10 @@ PrefabInstance:
     - target: {fileID: 6457625200131978678, guid: 0771e6f9100775d4d88035d5c2ac892f, type: 3}
       propertyPath: m_Name
       value: EnemySpawner (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6457625200131978678, guid: 0771e6f9100775d4d88035d5c2ac892f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6594071204478083496, guid: 0771e6f9100775d4d88035d5c2ac892f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -115022,6 +115042,10 @@ PrefabInstance:
     - target: {fileID: 6457625200131978678, guid: 0771e6f9100775d4d88035d5c2ac892f, type: 3}
       propertyPath: m_Name
       value: EnemySpawner (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6457625200131978678, guid: 0771e6f9100775d4d88035d5c2ac892f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6594071204478083496, guid: 0771e6f9100775d4d88035d5c2ac892f, type: 3}
       propertyPath: m_LocalPosition.x
