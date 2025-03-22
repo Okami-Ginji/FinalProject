@@ -338,6 +338,8 @@ MonoBehaviour:
   nextWPDistance: 0.3
   updateContinuesPath: 1
   targetChase: {fileID: 0}
+  energyObject: {fileID: 3042231078190144995, guid: 6e94f20bb4f590e4a864973be29173a0, type: 3}
+  heal: {fileID: 3256458835383546594, guid: 30806f5a47b3e5b469be3812d4041d35, type: 3}
   damage: 2
   expUI: {fileID: 0}
   enemyExp: 20

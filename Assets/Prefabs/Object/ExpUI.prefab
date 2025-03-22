@@ -118,10 +118,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b2e01c19c3e2814fb3ce22c120d2986, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  level: 0
   currentExp: 0
   maxExp: 100
   fillBar: {fileID: 6308247970807522723}
   expText: {fileID: 6884057063096670071}
+  playerControl: {fileID: 7714401478164655056, guid: 6f8a625fd76559249a8a27d46e5735a2, type: 3}
 --- !u!1 &2406861896551702737
 GameObject:
   m_ObjectHideFlags: 0

@@ -235,8 +235,12 @@ MonoBehaviour:
   jumpPower: 15
   dashBoost: 5
   dashTime: 0
-  ghostEffect: {fileID: 0}
+  dashCooldown: 2
+  ghostEffect: {fileID: 731519399906681779, guid: d893b6aa5390f0c46ba27740aec4ff27, type: 3}
   ghostDelay: 0.05
+  swordPrefab: {fileID: 8605167190953687821, guid: 5b447accb70676a45b2e7d36d9e7f1a6, type: 3}
+  expUI: {fileID: 1144036075052985306, guid: a3fa1babb288ee54bb35242010b94c86, type: 3}
+  skillShotPrefab: {fileID: 8019072429929398794, guid: d584769660bcd8e48bb474ad227fc60a, type: 3}
   fireball: {fileID: 8019072429929398794, guid: 0f06e15fec9ebd048a34e83cefaf48a1, type: 3}
   firePos: {fileID: 1996452286894830753}
   TimeBtwFire: 0.5

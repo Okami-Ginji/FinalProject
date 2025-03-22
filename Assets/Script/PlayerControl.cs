@@ -1,6 +1,9 @@
 ﻿﻿using UnityEngine;
 using TMPro;
 using System.Collections;
+using System.Collections.Generic;
+using static Cinemachine.DocumentationSortingAttribute;
+using System.Diagnostics;
 
 
 public class PlayerControl : MonoBehaviour
@@ -20,6 +23,22 @@ public class PlayerControl : MonoBehaviour
     public float ghostDelay = 0.05f;
     private Coroutine dashEffectCoroutine;
 
+    //spawn object khi len cap 
+    public int playerID;
+    public GameObject objectPrefab;   
+    private int lastCheckedLevel ;
+    private int currentLevel;
+    private List<GameObject> objects = new List<GameObject>();
+
+    //skill shot
+    public GameObject skillShotPrefab;
+    public GameObject meteorPrefab; 
+    public float spawnHeight = 5f;  
+    public float meteorSpeed = 10f;
+    private bool canUseSkill = true;
+    private float skillCooldown = 5f;
+
+    public ExpUI expUI;
 
     private Rigidbody2D rb;
     private Animator anim;
@@ -28,6 +47,7 @@ public class PlayerControl : MonoBehaviour
     bool isJumping = false;
     private bool alive = true;
 
+    
     public GameObject fireball;
     public Transform firePos;
 
@@ -59,8 +79,10 @@ public class PlayerControl : MonoBehaviour
         healthBar.UpdateBar(currentHealth, maxHealth);     
         cooldown = timeToReload;
         Reload();
-        playerScale = transform.localScale;
+        playerScale = transform.localScale;   
+        expUI = FindAnyObjectByType<ExpUI>();
     }
+    
 
     private void Update()
     {
@@ -71,6 +93,8 @@ public class PlayerControl : MonoBehaviour
             Die();
             Attack();           
             Run();
+            lastCheckedLevel = expUI.GetLevel();
+            CheckAndSpawn();
         }
     }
     //private void OnTriggerEnter2D(Collider2D other)
@@ -136,6 +160,118 @@ public class PlayerControl : MonoBehaviour
         {
             footstepSound.Stop();
         }
+        if (Input.GetKeyDown(KeyCode.E) && canUseSkill)
+        {
+            if (playerID == 1) {
+                SpawnMeteor();
+            }
+            else if (playerID == 2)
+            {
+                FireSkillShot();
+            }
+            canUseSkill = false; 
+            Invoke(nameof(ResetSkillCooldown), skillCooldown); 
+        }
+    }
+    void ResetSkillCooldown()
+    {
+        canUseSkill = true;
+    }
+    void CheckAndSpawn()
+    {
+        
+        UnityEngine.Debug.Log("aaaaaaaaa" + lastCheckedLevel);
+        if (lastCheckedLevel > currentLevel)
+        {
+            currentLevel = lastCheckedLevel;
+            
+            if (currentLevel % 2 == 0 && currentLevel <= 10)
+            {
+                SpawnObject(); 
+            }
+        }
+    }
+    
+
+    void SpawnObject()
+    {
+        if (objectPrefab == null) return;
+
+        float angleOffset = 360f / (objects.Count + 1);
+        float spawnAngle = angleOffset * objects.Count;
+
+        
+        if (playerID == 1)
+        {
+            GameObject newObject = Instantiate(objectPrefab, transform.position, Quaternion.identity);
+            BallFireRotate ballFireRotate = newObject.GetComponent<BallFireRotate>();
+            if (ballFireRotate != null)
+            {
+                ballFireRotate.Initialize(this.transform, spawnAngle);
+                objects.Add(newObject);
+            }
+        }
+        else if (playerID == 2)
+        {
+            GameObject newObject = Instantiate(objectPrefab, transform.position, Quaternion.identity);
+            OrbitingSword orbitingSword = newObject.GetComponent<OrbitingSword>();
+            if (orbitingSword != null)
+            {
+                orbitingSword.Initialize(this.transform, spawnAngle); // Truyền player và góc quay vào kiếm
+                objects.Add(newObject); // Thêm vào danh sách kiếm
+            }
+        }
+    }
+
+
+    void FireSkillShot()
+    {
+        GameObject skillShot = Instantiate(skillShotPrefab, firePos.position, Quaternion.identity);
+        Vector2 direction = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - firePos.position).normalized;
+        skillShot.GetComponent<SkillShot>().Initialize(direction);
+        //// Xoay đạn theo hướng bắn
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        skillShot.transform.rotation = Quaternion.Euler(0, 0, angle);
+    }
+
+    void SpawnMeteor()
+    {
+        GameObject targetEnemy = FindNearestEnemy();
+        if (targetEnemy == null)
+            return;
+
+        float playerDirection = transform.localScale.x;
+        float spawnOffsetX = playerDirection > 0 ? 3f : -3f;
+        Vector3 spawnPos = targetEnemy.transform.position + new Vector3(spawnOffsetX, spawnHeight, 0);
+
+       
+        float rotationAngle = playerDirection < 0 ? 135f : 45f;
+        GameObject meteor = Instantiate(meteorPrefab, spawnPos, Quaternion.Euler(0, 0, rotationAngle));
+
+
+        Meteor meteorScript = meteor.GetComponent<Meteor>();
+        if (meteorScript != null)
+        {
+            meteorScript.SetTarget(targetEnemy);
+        }
+    }
+
+    GameObject FindNearestEnemy()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        GameObject nearestEnemy = null;
+        float minDistance = Mathf.Infinity;
+
+        foreach (GameObject enemy in enemies)
+        {
+            float distance = Vector3.Distance(transform.position, enemy.transform.position);
+            if (distance < minDistance)
+            {
+                minDistance = distance;
+                nearestEnemy = enemy;
+            }
+        }
+        return nearestEnemy;
     }
     void StopDashEffect()
     {

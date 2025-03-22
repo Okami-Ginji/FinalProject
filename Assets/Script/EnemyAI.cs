@@ -260,16 +260,12 @@ public class EnemyAI : MonoBehaviour
         {
             Instantiate(energyObject, transform.position + dropOffset, Quaternion.identity);
             int chance = Random.Range(1, 11);
-            if (chance > 3)
+            if (chance < 3)
             {
                 Instantiate(heal, transform.position - dropOffset, Quaternion.identity);
             }
 
         }
-
-
-
-
     }
 
     public void getKnockback(Vector3 damageSource)
@@ -277,7 +273,8 @@ public class EnemyAI : MonoBehaviour
         if (rb == null) return;
 
         gettingKnockback = true;
-        Vector3 diff = (transform.position - damageSource).normalized * knockbackForce;
+        Vector3 diff = (transform.position + damageSource).normalized * knockbackForce * rb.mass;
+        
         rb.AddForce(diff, ForceMode2D.Impulse);
         StartCoroutine(knockbackCoroutine());
     }
