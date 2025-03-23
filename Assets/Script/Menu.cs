@@ -43,7 +43,10 @@ public class Menu : MonoBehaviour
 
     public void ExitGame()
     {
-        Application.Quit();
+        PlayerPrefs.Save();
+        Destroy(MapSellectionController.instance.gameObject);
+        Destroy(gameObject);
+        SceneManager.LoadScene("Menu");
     }
 
 
@@ -54,7 +57,7 @@ public class Menu : MonoBehaviour
         pauseMenu.SetActive(false);
         Time.timeScale = 1f;
         GamePause = false;
-        audioManager.musicAudioSource.UnPause();
+        //audioManager.musicAudioSource.UnPause();
         //playerControl.footstepSound.UnPause();
     }
 
@@ -63,7 +66,7 @@ public class Menu : MonoBehaviour
         pauseMenu.SetActive(true);
         Time.timeScale = 0f;
         GamePause = true;
-        audioManager.musicAudioSource.Pause();
+        //audioManager.musicAudioSource.Pause();
         //playerControl.footstepSound.Pause();
     }
 
