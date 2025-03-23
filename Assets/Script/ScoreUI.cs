@@ -38,14 +38,14 @@ public class ScoreUI : MonoBehaviour
 
     void Start()
     {
-        score = PlayerPrefs.GetInt("PlayerCoins", 0);
+        //score = PlayerPrefs.GetInt("PlayerCoins", 0);
         UpdateScore();
     }
     public void AddScore(int enemyScore)
     {
         score += enemyScore;
-        PlayerPrefs.SetInt("PlayerCoins", score); 
-        PlayerPrefs.Save(); 
+        //PlayerPrefs.SetInt("PlayerCoins", score); 
+        //PlayerPrefs.Save(); 
         UpdateScore();
     }
 

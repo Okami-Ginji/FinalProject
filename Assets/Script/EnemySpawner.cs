@@ -26,17 +26,25 @@ public class EnemySpawner : MonoBehaviour
 
     private IEnumerator SpawnEnemies()
     {
-             
         while (true)
         {
-            player = FindObjectOfType<PlayerControl>().transform;
-            gameTime += spawnInterval;
-            AdjustSpawnParameters();
-            SpawnWave();
+            PlayerControl foundPlayer = FindObjectOfType<PlayerControl>();
+            if (foundPlayer != null)
+            {
+                player = foundPlayer.transform;
+                gameTime += spawnInterval;
+                AdjustSpawnParameters();
+                SpawnWave();
+            }
+            else
+            {
+                Debug.LogWarning("Không tìm thấy PlayerControl, đang chờ...");
+            }
+
             yield return new WaitForSeconds(spawnInterval);
-        }    
-        
+        }
     }
+
 
     private void AdjustSpawnParameters()
     {

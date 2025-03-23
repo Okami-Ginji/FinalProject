@@ -10,18 +10,17 @@ public class GameController : MonoBehaviour
     public GameOver gameOver;
     public CinemachineTargetGroup targetGroup;
 
-    private PlayerControl playerControl;
-    private AudioManager audioManager;
+    private ScoreUI scoreUI;
     public static bool GamePause = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         Time.timeScale = 1f;
-       PlayerSpawn();
-        playerControl = FindObjectOfType<PlayerControl>();
-        audioManager = FindObjectOfType<AudioManager>();
+        PlayerSpawn();
+        scoreUI = FindObjectOfType<ScoreUI>();
+
     }
-    
+
     private void PlayerSpawn()
     {
         GameObject characterPrefab = SelectionController.instance.selectedPlayer.prefab;
@@ -47,10 +46,10 @@ public class GameController : MonoBehaviour
             targetGroup.m_Targets = targets.ToArray();
         }
     }
-    
+
     private void Update()
     {
-        if(FindObjectOfType<PlayerControl>() == null)
+        if (FindObjectOfType<PlayerControl>() == null)
         {
             GameOver();
         }
@@ -68,38 +67,16 @@ public class GameController : MonoBehaviour
         //        }
         //    }
         //}
-       
-    }
-    public void LoadGame()
-    {
-        string mapName = MapSellectionController.instance.mapName;
-        SceneManager.LoadScene(mapName);
-        Time.timeScale = 1f;
+
     }
 
-    public void ExitGame()
+    public void GameFinish()
     {
-        Application.Quit();
-    }
-
-
-    //esc menu
-    public void Resume()
-    {
-        pauseMenu.SetActive(false);
-        Time.timeScale = 1f;
-        GamePause = false;
-        audioManager.musicAudioSource.UnPause();
-        //playerControl.footstepSound.UnPause();
-    }
-
-    void Pause()
-    {
-        pauseMenu.SetActive(true);
         Time.timeScale = 0f;
-        GamePause = true;
-        audioManager.musicAudioSource.Pause();
-        //playerControl.footstepSound.Pause();
+        int scoreStock = PlayerPrefs.GetInt("PlayerCoins", 0);
+        PlayerPrefs.SetInt("PlayerCoins", scoreUI.score + scoreStock);
+        PlayerPrefs.Save();
+        //SceneManager.LoadScene("Menu");
     }
 
     public void GameOver()
@@ -111,7 +88,7 @@ public class GameController : MonoBehaviour
             //Cursor.lockState = CursorLockMode.None;
             Time.timeScale = 0f;
         }
-        
+
 
     }
 }
