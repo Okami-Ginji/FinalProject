@@ -147,6 +147,11 @@ public class EnemyAI : MonoBehaviour
         Vector3 playerPos = FindObjectOfType<PlayerControl>().transform.position;
         while (currentWP < path.vectorPath.Count)
         {
+            if (!alive)
+            {
+                rb.linearVelocity = Vector2.zero; 
+                yield break; 
+            }
 
             if (Vector2.Distance(transform.position, playerPos) <= stopDistance)
             {

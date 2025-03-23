@@ -82,8 +82,8 @@ public class EnemyAISeries : MonoBehaviour
         boxCollider2D = GetComponent<BoxCollider2D>();
         healthBar = GetComponentInChildren<EnemyHealthBar>();
         healthBar.UpdateEnemyHealth(currentHealth, maxHealth);
-        
 
+        rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -144,7 +144,11 @@ public class EnemyAISeries : MonoBehaviour
         Vector3 playerPos = FindObjectOfType<PlayerControl>().transform.position;
         while (currentWP < path.vectorPath.Count)
         {
-
+            if (!alive)
+            {
+                rb.linearVelocity = Vector2.zero;
+                yield break;
+            }
             if (Vector2.Distance(transform.position, playerPos) <= stopDistance)
             {
                 anim.SetBool("isMove", false);
@@ -241,6 +245,7 @@ public class EnemyAISeries : MonoBehaviour
             {
                 scoreUI.AddScore(enemyScore);
             }
+                      
             boxCollider2D.enabled = false;
 
         }
