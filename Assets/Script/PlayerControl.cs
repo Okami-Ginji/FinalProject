@@ -189,38 +189,72 @@ public class PlayerControl : MonoBehaviour
         {
             currentLevel = lastCheckedLevel;
 
-            if (currentLevel % 2 == 0 && currentLevel <= 10)
-
-                SpawnObject();
+            if (currentLevel % 4 == 0 )
+            {
+                if (playerID == 1) 
+                {
+                    SpawnBallFireObject();
+                }
+                if (playerID == 2)
+                {
+                    SpawnSwordObject();
+                }
+            }
+               
             
         }
     }
-    void SpawnObject()
+    void SpawnBallFireObject()
     {
         if (objectPrefab == null) return;
 
-        // Xác định góc của object mới
-        float spawnAngle = 360f / (objects.Count + 1) * objects.Count;
-
-        GameObject newObject = Instantiate(objectPrefab, transform.position, Quaternion.identity);
-
-        if (playerID == 1)
+        int numObjects = objects.Count + 1;
+        float angleBetweenObjects = 360f / (numObjects);
+       
+        for (int i = 0; i < objects.Count; i++)
         {
-            BallFireRotate ballFireRotate = newObject.GetComponent<BallFireRotate>();
-            if (ballFireRotate != null)
+            float newAngle = i * angleBetweenObjects;
+            BallFireRotate angleBallFire = objects[i].GetComponent<BallFireRotate>();
+            if (angleBallFire != null)
             {
-                ballFireRotate.Initialize(this.transform, spawnAngle);
-                objects.Add(newObject);
+                angleBallFire.UpdateAngle(newAngle);
             }
-        }
-        else if (playerID == 2)
+        }        
+        float spawnAngle = (numObjects - 1) * angleBetweenObjects;
+        GameObject newObject = Instantiate(objectPrefab, transform.position, Quaternion.identity);
+        BallFireRotate newBallFire = newObject.GetComponent<BallFireRotate>();
+
+        if (newBallFire != null)
         {
-            OrbitingSword orbitingSword = newObject.GetComponent<OrbitingSword>();
+            newBallFire.Initialize(this.transform, spawnAngle);
+            objects.Add(newObject);
+        }
+    }
+    void SpawnSwordObject()
+    {
+        if (objectPrefab == null) return;
+
+        int numObjects = objects.Count + 1; 
+        float angleBetweenObjects = 360f / (numObjects); 
+       
+        for (int i = 0; i < objects.Count; i++)
+        {
+            float newAngle = i * angleBetweenObjects;
+            OrbitingSword orbitingSword = objects[i].GetComponent<OrbitingSword>();
             if (orbitingSword != null)
             {
-                orbitingSword.Initialize(this.transform, spawnAngle);
-                objects.Add(newObject);
+                orbitingSword.UpdateAngle(newAngle);
             }
+        }
+
+        float spawnAngle = (numObjects - 1) * angleBetweenObjects;
+        GameObject newObject = Instantiate(objectPrefab, transform.position, Quaternion.identity);
+        OrbitingSword newSword = newObject.GetComponent<OrbitingSword>();
+
+        if (newSword != null)
+        {
+            newSword.Initialize(this.transform, spawnAngle);
+            objects.Add(newObject);
         }
     }
 
@@ -435,11 +469,11 @@ public class PlayerControl : MonoBehaviour
 
     void Die()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            anim.SetTrigger("die");
-            alive = false;
-        }
+        //if (Input.GetKeyDown(KeyCode.Alpha1))
+        //{
+        //    anim.SetTrigger("die");
+        //    alive = false;
+        //}
     }
     void Restart()
     {

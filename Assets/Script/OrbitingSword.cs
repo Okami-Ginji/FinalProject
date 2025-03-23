@@ -13,6 +13,10 @@ public class OrbitingSword : MonoBehaviour
         this.player = playerTransform;
         this.angle = offsetAngle;
     }
+    public void UpdateAngle(float newAngle)
+    {
+        this.angle = newAngle;
+    }
 
     void LateUpdate()
     {
