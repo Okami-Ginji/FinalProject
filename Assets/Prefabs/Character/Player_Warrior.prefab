@@ -587,10 +587,17 @@ MonoBehaviour:
   movePower: 5
   jumpPower: 15
   dashBoost: 5
-  dashTime: 0
+  dashTime: 0.3
   dashCooldown: 2
   ghostEffect: {fileID: 731519399906681779, guid: d893b6aa5390f0c46ba27740aec4ff27, type: 3}
   ghostDelay: 0.05
+  playerID: 2
+  objectPrefab: {fileID: 7539456610960986972, guid: 9a48d605cce092a4ba470ece8d9b3ab6, type: 3}
+  skillShotPrefab: {fileID: 8019072429929398794, guid: a881396fc7caab3429c37025fa49a885, type: 3}
+  meteorPrefab: {fileID: 0}
+  spawnHeight: 5
+  meteorSpeed: 10
+  expUI: {fileID: 1144036075052985306, guid: a3fa1babb288ee54bb35242010b94c86, type: 3}
   fireball: {fileID: 8019072429929398794, guid: 0f06e15fec9ebd048a34e83cefaf48a1, type: 3}
   firePos: {fileID: 1996452286894830753}
   TimeBtwFire: 0.5

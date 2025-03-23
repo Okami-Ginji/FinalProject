@@ -10,6 +10,10 @@ TagManager:
   - Energy
   - HealthItem
   - NumberAmo
+  - Sword
+  - SkillShot
+  - BallFire
+  - Meteor
   layers:
   - Default
   - TransparentFX
@@ -73,6 +77,18 @@ TagManager:
     locked: 0
   - name: Ma
     uniqueID: 2803617021
+    locked: 0
+  - name: Sword
+    uniqueID: 559408795
+    locked: 0
+  - name: SkillShot
+    uniqueID: 3913084947
+    locked: 0
+  - name: BallFire
+    uniqueID: 218831065
+    locked: 0
+  - name: Meteor
+    uniqueID: 2747498637
     locked: 0
   m_RenderingLayers:
   - Default

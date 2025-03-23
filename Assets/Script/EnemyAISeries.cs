@@ -26,6 +26,9 @@ public class EnemyAISeries : MonoBehaviour
 
     Rigidbody2D rb;
 
+    [SerializeField] private GameObject energyObject;
+    [SerializeField] private GameObject heal;
+
     public GameObject targetChase;
     public int damage;
 
@@ -58,6 +61,11 @@ public class EnemyAISeries : MonoBehaviour
     public GameObject popupDamagePrefab;
 
     public LayerMask playerLayer;
+
+    //knockback
+    public float knockbackTime = 0.2f;
+    public float knockbackForce = 15f;
+    public bool gettingKnockback = false;
 
 
     private Vector3 EnemyScale;
@@ -206,24 +214,27 @@ public class EnemyAISeries : MonoBehaviour
         }
     }
 
-    public void ChangeHealth(int amount)
+    public void ChangeHealth(int amount, Vector3 damageSource)
     {
         currentHealth += amount;
-        Debug.Log(transform.position);
+        //Debug.Log(transform.position);
         GameObject instance = Instantiate(popupDamagePrefab, transform.position, Quaternion.identity);
         instance.GetComponentInChildren<TMP_Text>().text = amount.ToString();
         //valueText.text = amount.ToString();
 
         healthBar.UpdateEnemyHealth(currentHealth, maxHealth);
+        if (amount <= 0)
+        {
+            getKnockback(damageSource);
+        }
 
         if (currentHealth <= 0)
         {
+            DropItems();
+
+
             alive = false;
             anim.SetTrigger("die");
-            if (expUI != null)
-            {
-                expUI.UpdateBar(enemyExp);
-            }
             if (scoreUI != null)
             {
                 scoreUI.AddScore(enemyScore);
@@ -231,6 +242,37 @@ public class EnemyAISeries : MonoBehaviour
             boxCollider2D.enabled = false;
 
         }
+    }
+    private void DropItems()
+    {
+        Vector3 dropOffset = new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(0.3f, 0.8f), 0);
+
+
+        if (energyObject != null && heal != null)
+        {
+            Instantiate(energyObject, transform.position + dropOffset, Quaternion.identity);
+            int chance = Random.Range(1, 11);
+            if (chance < 3)
+            {
+                Instantiate(heal, transform.position - dropOffset, Quaternion.identity);
+            }
+
+        }
+    }
+    public void getKnockback(Vector3 damageSource)
+    {
+        if (rb == null) return;
+
+        gettingKnockback = true;
+        Vector3 diff = (transform.position - damageSource).normalized * knockbackForce;
+        rb.AddForce(diff, ForceMode2D.Impulse);
+        StartCoroutine(knockbackCoroutine());
+    }
+    private IEnumerator knockbackCoroutine()
+    {
+        yield return new WaitForSeconds(knockbackTime);
+        rb.linearVelocity = Vector3.zero;
+        gettingKnockback = false;
     }
 
     public void WaitAndDisable()
