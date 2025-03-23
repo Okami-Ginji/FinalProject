@@ -6,8 +6,9 @@ using UnityEngine.SceneManagement;
 public class GameController : MonoBehaviour
 {
     public GameObject gameOverScreen;
+    public GameObject gameWinScreen;
     public GameObject pauseMenu;
-    public GameOver gameOver;
+    public TimeUI timeUI;
     public CinemachineTargetGroup targetGroup;
 
     private ScoreUI scoreUI;
@@ -53,6 +54,10 @@ public class GameController : MonoBehaviour
         {
             GameOver();
         }
+        if(timeUI.timeRemaining <= 0)
+        {
+            GameFinish();
+        }
         //else
         //{
         //    if (Input.GetKeyDown(KeyCode.Escape))
@@ -72,23 +77,47 @@ public class GameController : MonoBehaviour
 
     public void GameFinish()
     {
-        Time.timeScale = 0f;
-        int scoreStock = PlayerPrefs.GetInt("PlayerCoins", 0);
-        PlayerPrefs.SetInt("PlayerCoins", scoreUI.score + scoreStock);
-        PlayerPrefs.Save();
+        gameWinScreen.SetActive(true);
+        if (gameWinScreen.activeInHierarchy)
+        {
+            Time.timeScale = 0f;
+            int scoreStock = PlayerPrefs.GetInt("PlayerCoins", 0);
+            PlayerPrefs.SetInt("PlayerCoins", scoreUI.score + scoreStock);
+            PlayerPrefs.Save();
+            int countMap = MapSellectionController.instance.mapSprites.Count;
+            int unlockMap = MapSellectionController.instance.selectedMap + 1;
+            if (countMap > unlockMap)
+            {
+                PlayerPrefs.SetInt("Map_" + unlockMap + "_Unlocked", 1);
+                PlayerPrefs.Save();
+
+            }
+        }
         //SceneManager.LoadScene("Menu");
     }
 
+    public void goNextMap()
+    {
+        Destroy(gameObject);
+        MapSellectionController.instance.mapName = MapSellectionController.instance.mapSprites[MapSellectionController.instance.selectedMap + 1].name;
+        SceneManager.LoadScene(MapSellectionController.instance.mapName);
+    }
+
+    public void backHome()
+    {
+        PlayerPrefs.Save();
+        Destroy(MapSellectionController.instance.gameObject);
+        Destroy(SelectionController.instance.gameObject);
+        Destroy(gameObject);
+        SceneManager.LoadScene("Menu");
+    }
     public void GameOver()
     {
-        gameOver.Setup();
+        gameOverScreen.SetActive(true);       
         if (gameOverScreen.activeInHierarchy)
         {
-            //Cursor.visible = true;
-            //Cursor.lockState = CursorLockMode.None;
             Time.timeScale = 0f;
         }
-
-
     }
+
 }

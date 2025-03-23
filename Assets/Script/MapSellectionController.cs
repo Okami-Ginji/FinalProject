@@ -13,7 +13,7 @@ public class MapSellectionController : MonoBehaviour
     public Image mapImage;
     public Image lockImage;
     public Button chooseCharacterButton;
-    private int selectedMap = 0;
+    public int selectedMap = 0;
     public TextMeshProUGUI nameText;
     public string mapName;
 

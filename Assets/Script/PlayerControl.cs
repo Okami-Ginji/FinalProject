@@ -430,11 +430,11 @@ public class PlayerControl : MonoBehaviour
 
     void Die()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            anim.SetTrigger("die");
-            alive = false;
-        }
+        //if (Input.GetKeyDown(KeyCode.Alpha1))
+        //{
+        //    anim.SetTrigger("die");
+        //    alive = false;
+        //}
     }
     void Restart()
     {
