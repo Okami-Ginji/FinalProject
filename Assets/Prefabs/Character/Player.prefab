@@ -1470,10 +1470,17 @@ MonoBehaviour:
   movePower: 3
   jumpPower: 15
   dashBoost: 5
-  dashTime: 0
+  dashTime: 0.3
   dashCooldown: 2
   ghostEffect: {fileID: 5548945793308304524, guid: 5af5ed1f89aa08848b6c3efc4faf6742, type: 3}
   ghostDelay: 0.05
+  playerID: 1
+  objectPrefab: {fileID: 7071722363310604403, guid: 02d7bea2b69cdd54f9de13da0802f878, type: 3}
+  skillShotPrefab: {fileID: 0}
+  meteorPrefab: {fileID: 940421569937836626, guid: 38c5cc2faef09c443bc527272277cfeb, type: 3}
+  spawnHeight: 5
+  meteorSpeed: 10
+  expUI: {fileID: 1144036075052985306, guid: a3fa1babb288ee54bb35242010b94c86, type: 3}
   fireball: {fileID: 2538063348152048904, guid: e5d04436466882b4bacb726418c97512, type: 3}
   firePos: {fileID: 9073704808104333790}
   TimeBtwFire: 0.5
@@ -1481,7 +1488,7 @@ MonoBehaviour:
   currentHealth: 100
   maxHealth: 100
   ammo: {fileID: 3340300600828913497, guid: b4268eb1ee014b641ba5c5f5c3577e41, type: 3}
-  timeToReload: 10
+  timeToReload: 3
   healthBar: {fileID: 0}
   reloadAmoEffect: {fileID: 2704417114033102920}
 --- !u!82 &-3241156699805170668

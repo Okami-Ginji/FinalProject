@@ -255,7 +255,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -337,6 +337,8 @@ MonoBehaviour:
   moveSpeed: 1
   nextWPDistance: 0.3
   updateContinuesPath: 1
+  energyObject: {fileID: 3042231078190144995, guid: 6e94f20bb4f590e4a864973be29173a0, type: 3}
+  heal: {fileID: 3256458835383546594, guid: 30806f5a47b3e5b469be3812d4041d35, type: 3}
   targetChase: {fileID: 0}
   damage: 2
   expUI: {fileID: 0}
@@ -356,6 +358,9 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 64
+  knockbackTime: 0.2
+  knockbackForce: 15
+  gettingKnockback: 0
 --- !u!1 &2228477155147602118
 GameObject:
   m_ObjectHideFlags: 0
