@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4891639778162032976
+--- !u!1 &9145327660294011215
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,44 +8,44 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4142051058400511717}
-  - component: {fileID: 3316989724739144260}
+  - component: {fileID: 1299337224404809098}
+  - component: {fileID: 2704467453035079823}
   m_Layer: 0
-  m_Name: GameController
+  m_Name: Global Volume
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4142051058400511717
+--- !u!4 &1299337224404809098
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4891639778162032976}
+  m_GameObject: {fileID: 9145327660294011215}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.209399, y: 1.9432359, z: -0.08435514}
+  m_LocalPosition: {x: 205.19984, y: 237.96306, z: -0.7826861}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3316989724739144260
+--- !u!114 &2704467453035079823
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4891639778162032976}
+  m_GameObject: {fileID: 9145327660294011215}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17effa13b5f9d8d4a8b1d9f05c8cb949, type: 3}
+  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameOverScreen: {fileID: 0}
-  gameWinScreen: {fileID: 2997513098198337060, guid: 5958fdde75ec9b24eaebb2896b0f51d7, type: 3}
-  pauseMenu: {fileID: 0}
-  gameOver: {fileID: 0}
-  targetGroup: {fileID: 0}
+  sharedProfile: {fileID: 11400000, guid: 81a53ee56e7b0834f96f6d64754310b7, type: 2}
+  isGlobal: 1
+  blendDistance: 0
+  weight: 1
+  priority: 0

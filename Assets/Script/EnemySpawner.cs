@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Cinemachine;
 
 public class EnemySpawner : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private float despawnDistance;
     [SerializeField] private float spawnDistance;
 
+    [SerializeField] private GameObject followCamera;
+    [SerializeField] private GameObject spawnBossCamera;
+
     private Transform player;
     private float gameTime = 0f;
     private float spawnInterval = 5f;
@@ -17,13 +21,21 @@ public class EnemySpawner : MonoBehaviour
     private bool bossSpawned = false;
     private int maxMeleeEnemies = 20;
     private int maxRangedEnemies = 10;
-   
+
     private void Start()
-    {     
+    {
         StartCoroutine(SpawnEnemies());
         StartCoroutine(CheckAndDespawnEnemies());
     }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            spawnBoss();
+        }
 
+
+    }
     private IEnumerator SpawnEnemies()
     {
         while (true)
@@ -57,8 +69,7 @@ public class EnemySpawner : MonoBehaviour
     {
         if (gameTime >= 540f && !bossSpawned) // 9 phút: Boss xuất hiện
         {
-            Instantiate(bossPrefab, GetSpawnPosition(), Quaternion.identity);
-            bossSpawned = true;
+            spawnBoss();
         }
         else
         {
@@ -98,7 +109,7 @@ public class EnemySpawner : MonoBehaviour
 
         Debug.Log("aaaaa: " + spawnDistance);
         return player.position + offset;
-        
+
     }
 
     private float GetEnemyRate()
@@ -112,7 +123,7 @@ public class EnemySpawner : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(2f); 
+            yield return new WaitForSeconds(2f);
             GameObject[] enemies = GameObject.FindGameObjectsWithTag("EnemySeries");
             foreach (GameObject enemy in enemies)
             {
@@ -132,4 +143,43 @@ public class EnemySpawner : MonoBehaviour
             }
         }
     }
+
+    private void destroyAllEnemy()
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("EnemySeries");
+        foreach (GameObject enemy in enemies)
+        {
+            Destroy(enemy);
+        }
+
+        enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject enemy in enemies)
+        {
+            Destroy(enemy);
+        }
+    }
+
+    public void spawnBoss()
+    {
+        destroyAllEnemy();
+        StopCoroutine(SpawnEnemies());
+        StopCoroutine(CheckAndDespawnEnemies());
+        followCamera.SetActive(false);
+        Instantiate(bossPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+
+        bossSpawned = true;
+        StartCoroutine(ReactivateCamera());
+    }
+
+    private IEnumerator ReactivateCamera()
+    {
+        yield return new WaitForSeconds(2f);
+        BossAI bossScript = FindObjectOfType<BossAI>();
+        if (bossScript != null)
+        {
+            bossScript.enabled = true;
+        }
+        followCamera.SetActive(true);
+    }
+
 }
