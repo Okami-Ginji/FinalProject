@@ -36,4 +36,8 @@ public class ExpUI : MonoBehaviour
         fillBar.fillAmount = currentExp / maxExp;
         expText.text = "Level " + level;
     }
+    public int GetLevel()
+    {
+        return level;
+    }
 }
