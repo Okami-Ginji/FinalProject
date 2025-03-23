@@ -441,7 +441,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6911791671568544694}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 10e8cb37d5d0e0544904f568cfdc9d7d, type: 3}
   m_Name: 
@@ -453,6 +453,7 @@ MonoBehaviour:
   updateContinuesPath: 1
   targetChase: {fileID: 4233578485281666690, guid: 188c39a15c39a324697cde1a0263f64b, type: 3}
   timeBtwSpell: 5
+  timeBtwTele: 0
   spell: {fileID: 154687440192454508, guid: 85f93d7119d65c845b802b2d6f858c34, type: 3}
   scoreUI: {fileID: 0}
   enemyScore: 1000
@@ -463,7 +464,7 @@ MonoBehaviour:
   stopDistance: 2
   fireball: {fileID: 4579289615185893721, guid: 3d4d1826056625e409c80a9605fcb56b, type: 3}
   fireballSpeed: 10
-  timeBtwfire: 2
+  timeBtwfire: 3
   firePos: {fileID: 58508415433047652}
   currentHealth: 1000
   maxHealth: 1000

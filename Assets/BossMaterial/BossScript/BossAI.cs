@@ -1,7 +1,6 @@
 using Pathfinding;
 using System.Collections;
 using TMPro;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
 
@@ -28,6 +27,8 @@ public class BossAI : MonoBehaviour
     public GameObject targetChase;
     public float timeBtwSpell;
     private float spellcooldown;
+    public float timeBtwTele;
+    private float telecooldown;
     public GameObject spell;
 
 
@@ -80,8 +81,15 @@ public class BossAI : MonoBehaviour
         boxCollider2D = GetComponent<BoxCollider2D>();
         healthBar = GetComponentInChildren<EnemyHealthBar>();
         healthBar.UpdateEnemyHealth(currentHealth, maxHealth);
-        spellcooldown = 10f;
+        
         rb = GetComponent<Rigidbody2D>();
+
+        timeBtwTele = 5f;
+        telecooldown = timeBtwTele;
+
+        spellcooldown = 10f;
+
+        cooldown = timeBtwfire;
     }
 
     // Update is called once per frame
@@ -96,7 +104,7 @@ public class BossAI : MonoBehaviour
                 {
                     cooldown -= Time.deltaTime;
                     spellcooldown -= Time.deltaTime;
-
+                    telecooldown -= Time.deltaTime;
                     if (cooldown < 0f)
                     {
                         cooldown = timeBtwfire;
@@ -109,13 +117,16 @@ public class BossAI : MonoBehaviour
                             anim.SetTrigger("castSpell");
                         }
                         float distanceToPlayer = Vector2.Distance(transform.position, playerPos);
-                        if (distanceToPlayer > 10f)
+                        
+                        if (distanceToPlayer > 10f && telecooldown < 0f)
                         {
                             if (moveCoroutine != null) StopCoroutine(moveCoroutine);
 
                             anim.SetTrigger("teleport");
 
                             anim.SetTrigger("attack");
+
+                            telecooldown = timeBtwTele;
                         }
                     }
 

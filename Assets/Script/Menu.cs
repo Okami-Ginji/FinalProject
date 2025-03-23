@@ -45,6 +45,7 @@ public class Menu : MonoBehaviour
     {
         PlayerPrefs.Save();
         Destroy(MapSellectionController.instance.gameObject);
+        Destroy(SelectionController.instance.gameObject);
         Destroy(gameObject);
         SceneManager.LoadScene("Menu");
     }
