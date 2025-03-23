@@ -177,7 +177,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicAudioSource: {fileID: 8511119240231870817}
   vfxAudioSource: {fileID: 370918849277262365}
-  musicClip: {fileID: 8300000, guid: cf5b2eb1548fc2d4fa1acd3c94a12019, type: 3}
+  musicMenuScreen: {fileID: 8300000, guid: 52b375e84ac301748b09dfa8445d6e09, type: 3}
+  musicPlayScreen: {fileID: 8300000, guid: 5e2d38e76b470bd46afbb5d73464eedf, type: 3}
+  clickSound: {fileID: 8300000, guid: df99723edda8f4d4a986703451d51417, type: 3}
   healthClip: {fileID: 8300000, guid: 41018bdceb6721448894131b1a12ecae, type: 3}
   expClip: {fileID: 8300000, guid: a1cb2a99c3ab0044f920b5307d16a919, type: 3}
 --- !u!1 &8611226530639205637
