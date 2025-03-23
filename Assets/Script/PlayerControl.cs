@@ -190,24 +190,22 @@ public class PlayerControl : MonoBehaviour
             currentLevel = lastCheckedLevel;
 
             if (currentLevel % 2 == 0 && currentLevel <= 10)
-            {
+
                 SpawnObject();
-            }
+            
         }
     }
-
-
     void SpawnObject()
     {
         if (objectPrefab == null) return;
 
-        float angleOffset = 360f / (objects.Count + 1);
-        float spawnAngle = angleOffset * objects.Count;
+        // Xác định góc của object mới
+        float spawnAngle = 360f / (objects.Count + 1) * objects.Count;
 
+        GameObject newObject = Instantiate(objectPrefab, transform.position, Quaternion.identity);
 
         if (playerID == 1)
         {
-            GameObject newObject = Instantiate(objectPrefab, transform.position, Quaternion.identity);
             BallFireRotate ballFireRotate = newObject.GetComponent<BallFireRotate>();
             if (ballFireRotate != null)
             {
@@ -217,12 +215,11 @@ public class PlayerControl : MonoBehaviour
         }
         else if (playerID == 2)
         {
-            GameObject newObject = Instantiate(objectPrefab, transform.position, Quaternion.identity);
             OrbitingSword orbitingSword = newObject.GetComponent<OrbitingSword>();
             if (orbitingSword != null)
             {
-                orbitingSword.Initialize(this.transform, spawnAngle); // Truyền player và góc quay vào kiếm
-                objects.Add(newObject); // Thêm vào danh sách kiếm
+                orbitingSword.Initialize(this.transform, spawnAngle);
+                objects.Add(newObject);
             }
         }
     }
@@ -263,10 +260,17 @@ public class PlayerControl : MonoBehaviour
     GameObject FindNearestEnemy()
     {
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        GameObject[] enemySeries = GameObject.FindGameObjectsWithTag("EnemySeries");
+
         GameObject nearestEnemy = null;
         float minDistance = Mathf.Infinity;
 
-        foreach (GameObject enemy in enemies)
+        // Gộp cả hai danh sách thành một
+        List<GameObject> allEnemies = new List<GameObject>();
+        allEnemies.AddRange(enemies);
+        allEnemies.AddRange(enemySeries);
+
+        foreach (GameObject enemy in allEnemies)
         {
             float distance = Vector3.Distance(transform.position, enemy.transform.position);
             if (distance < minDistance)
@@ -275,6 +279,7 @@ public class PlayerControl : MonoBehaviour
                 nearestEnemy = enemy;
             }
         }
+
         return nearestEnemy;
 
         ////âm thanh khi di chuyển

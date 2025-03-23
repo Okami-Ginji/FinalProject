@@ -37,6 +37,11 @@ public class Meteor : MonoBehaviour
         if (target != null && target.CompareTag("Enemy"))
         {
             target.GetComponent<EnemyAI>().ChangeHealth(-50, transform.position);
+            
+        }
+
+        else if (target != null && target.CompareTag("EnemySeries"))
+        {
             target.GetComponent<EnemyAISeries>().ChangeHealth(-50, transform.position);
         }
 

@@ -85,6 +85,8 @@ public class EnemyAI : MonoBehaviour
         healthBar.UpdateEnemyHealth(currentHealth, maxHealth);
 
         rb = GetComponent<Rigidbody2D>();
+
+        
     }
 
     // Update is called once per frame
