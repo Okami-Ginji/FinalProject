@@ -14,7 +14,10 @@ public class BallFireRotate : MonoBehaviour
         this.player = playerTransform;
         this.angle = offsetAngle;
     }
-
+    public void UpdateAngle(float newAngle)
+    {
+        this.angle = newAngle;
+    }
     void LateUpdate()
     {
         if (player == null)

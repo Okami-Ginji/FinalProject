@@ -85,6 +85,8 @@ public class EnemyAI : MonoBehaviour
         healthBar.UpdateEnemyHealth(currentHealth, maxHealth);
 
         rb = GetComponent<Rigidbody2D>();
+
+        
     }
 
     // Update is called once per frame
@@ -266,10 +268,6 @@ public class EnemyAI : MonoBehaviour
             }
 
         }
-
-
-
-
     }
 
     public void getKnockback(Vector3 damageSource)
@@ -286,7 +284,9 @@ public class EnemyAI : MonoBehaviour
         yield return new WaitForSeconds(knockbackTime);
         rb.linearVelocity = Vector3.zero;
         gettingKnockback = false;
+        
     }
+    
 
     public void WaitAndDisable()
     {

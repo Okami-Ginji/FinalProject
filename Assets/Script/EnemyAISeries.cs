@@ -82,6 +82,8 @@ public class EnemyAISeries : MonoBehaviour
         boxCollider2D = GetComponent<BoxCollider2D>();
         healthBar = GetComponentInChildren<EnemyHealthBar>();
         healthBar.UpdateEnemyHealth(currentHealth, maxHealth);
+        
+
     }
 
     // Update is called once per frame
