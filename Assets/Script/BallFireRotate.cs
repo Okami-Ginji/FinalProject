@@ -71,5 +71,22 @@ public class BallFireRotate : MonoBehaviour
                 }
             }
         }
+        if (collision.CompareTag("EnemyBoss"))
+        {
+            BossAI enemy = collision.GetComponent<BossAI>();
+
+            if (enemy != null)
+            {
+                enemy.getKnockback(transform.position);
+                enemy.ChangeHealth(-3, transform.position);
+
+
+                Rigidbody2D enemyRb = collision.GetComponent<Rigidbody2D>();
+                if (enemyRb != null)
+                {
+                    enemy.getKnockback(transform.position);
+                }
+            }
+        }
     }
 }

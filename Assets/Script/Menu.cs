@@ -7,7 +7,7 @@ public class Menu : MonoBehaviour
     public GameObject pauseMenu;
     public GameObject dieMenu;
     private PlayerControl playerControl;
-    private AudioManager audioManager;
+    private AudioManager_PlayScreen audioManager;
     //private void Awake()
     //{
     //    playerControl = FindObjectOfType<PlayerControl>();
@@ -16,7 +16,7 @@ public class Menu : MonoBehaviour
     private void Start()
     {
         playerControl = FindObjectOfType<PlayerControl>();
-        audioManager = FindObjectOfType<AudioManager>();
+        audioManager = FindObjectOfType<AudioManager_PlayScreen>();
     }
 
     //Escmenu
@@ -58,7 +58,7 @@ public class Menu : MonoBehaviour
         pauseMenu.SetActive(false);
         Time.timeScale = 1f;
         GamePause = false;
-        //audioManager.musicAudioSource.UnPause();
+        audioManager.musicAudioSource.UnPause();
         //playerControl.footstepSound.UnPause();
     }
 
@@ -67,7 +67,7 @@ public class Menu : MonoBehaviour
         pauseMenu.SetActive(true);
         Time.timeScale = 0f;
         GamePause = true;
-        //audioManager.musicAudioSource.Pause();
+        audioManager.musicAudioSource.Pause();
         //playerControl.footstepSound.Pause();
     }
 

@@ -155,12 +155,7 @@ public class MapSellectionController : MonoBehaviour
         {
             mapName = mapSprites[selectedMap].name;
             SceneManager.LoadScene("ChooseCharacter");
-        }
-        else
-        {
-            Debug.Log("Bạn cần mở khóa map này trước!");
-            StartCoroutine(ShowMessage("Nạp tiền vô mở khóa :v", 5f));
-        }
+        }      
     }
 
     IEnumerator ShowMessage(string message, float duration)

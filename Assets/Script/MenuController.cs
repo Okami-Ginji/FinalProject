@@ -15,15 +15,29 @@ public class MenuController : MonoBehaviour
         messageBox.gameObject.SetActive(false);
     }
     public void NewGameButton()
-    {
-        
+    {       
         ResetGameProgress();
+        PlayerPrefs.SetInt("Player_AlreadyPlay", 1);
+        PlayerPrefs.Save();
         SceneManager.LoadScene("ChooseMap");
     }
 
     public void LoadGameButton()
     {
-        SceneManager.LoadScene("ChooseMap");
+        bool isPlayed = PlayerPrefs.GetInt("Player_AlreadyPlay", 0) == 1;
+        if (isPlayed)
+        {
+            SceneManager.LoadScene("ChooseMap");
+        }
+        else
+        {
+            LoadIntro();
+        }            
+    }
+
+    public void LoadIntro()
+    {      
+        SceneManager.LoadScene("Intro");
     }
     public void ExitGameButton()
     {

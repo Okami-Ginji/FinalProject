@@ -3,14 +3,14 @@
 public class HealthItem : MonoBehaviour
 {
     public int healAmount = 4; 
-    private AudioManager audioManager;
+    private AudioManager_PlayScreen audioManager;
     [SerializeField] private GameObject heal;
     private EnemyAI enemy;
     private EnemyAISeries aISeries;
 
     private void Awake()
     {
-        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager_PlayScreen>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

@@ -14,6 +14,7 @@ TagManager:
   - SkillShot
   - BallFire
   - Meteor
+  - EnemyBoss
   layers:
   - Default
   - TransparentFX

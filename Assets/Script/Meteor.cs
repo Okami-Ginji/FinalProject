@@ -64,6 +64,15 @@ public class Meteor : MonoBehaviour
                     enemySeries.getKnockback(transform.position);
                 }
             }
+            else if (enemy.CompareTag("EnemyBoss"))
+            {
+                BossAI enemyBoss = enemy.GetComponent<BossAI>();
+                if (enemyBoss != null)
+                {
+                    enemyBoss.ChangeHealth(-damage, transform.position);
+                    enemyBoss.getKnockback(transform.position);
+                }
+            }
         }
 
         // Hủy thiên thạch sau khi nổ
