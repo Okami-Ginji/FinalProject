@@ -584,7 +584,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3cc9e435e0a94141a257a14b1a235ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movePower: 5
+  movePower: 3
   jumpPower: 15
   dashBoost: 5
   dashTime: 0.3
@@ -605,7 +605,7 @@ MonoBehaviour:
   currentHealth: 100
   maxHealth: 100
   ammo: {fileID: 3340300600828913497, guid: b4268eb1ee014b641ba5c5f5c3577e41, type: 3}
-  timeToReload: 2
+  timeToReload: 6
   healthBar: {fileID: 0}
   reloadAmoEffect: {fileID: 4197115343212116605}
 --- !u!82 &5764817728547657729
