@@ -9,13 +9,23 @@ public class GameController : MonoBehaviour
     public GameObject gameWinScreen;
     public GameObject pauseMenu;
     public TimeUI timeUI;
-    public CinemachineTargetGroup targetGroup;
+    public AudioClip DiedSound;
+    public AudioClip WinSound;
 
+    public CinemachineTargetGroup targetGroup;
+    private AudioManager_PlayScreen audioManager;
     private ScoreUI scoreUI;
+    
     public static bool GamePause = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        if (AudioManager_MenuScreen.instance != null)
+        {
+            Destroy(AudioManager_MenuScreen.instance.gameObject);
+        }
+        audioManager = FindObjectOfType<AudioManager_PlayScreen>();
+        audioManager.musicAudioSource.UnPause();
         Time.timeScale = 1f;
         PlayerSpawn();
         scoreUI = FindObjectOfType<ScoreUI>();
@@ -58,6 +68,14 @@ public class GameController : MonoBehaviour
         {
             GameFinish();
         }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            GameFinish();
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            GameOver();
+        }
         //else
         //{
         //    if (Input.GetKeyDown(KeyCode.Escape))
@@ -77,7 +95,9 @@ public class GameController : MonoBehaviour
 
     public void GameFinish()
     {
-        gameWinScreen.SetActive(true);
+        audioManager.musicAudioSource.Pause();
+        audioManager.PlaySFX(WinSound);
+        gameWinScreen.SetActive(true);        
         if (gameWinScreen.activeInHierarchy)
         {
             Time.timeScale = 0f;
@@ -111,9 +131,20 @@ public class GameController : MonoBehaviour
         Destroy(gameObject);
         SceneManager.LoadScene("Menu");
     }
+
+    public void LoadGame()
+    {
+        string mapName = MapSellectionController.instance.mapName;
+        SceneManager.LoadScene(mapName);
+        Time.timeScale = 1f;
+    }
+
     public void GameOver()
     {
-        gameOverScreen.SetActive(true);       
+        audioManager.musicAudioSource.Pause();
+        audioManager.PlaySFX(DiedSound);
+        gameOverScreen.SetActive(true);  
+        
         if (gameOverScreen.activeInHierarchy)
         {
             Time.timeScale = 0f;

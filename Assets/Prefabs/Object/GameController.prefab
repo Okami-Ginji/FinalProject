@@ -47,5 +47,7 @@ MonoBehaviour:
   gameOverScreen: {fileID: 0}
   gameWinScreen: {fileID: 2997513098198337060, guid: 5958fdde75ec9b24eaebb2896b0f51d7, type: 3}
   pauseMenu: {fileID: 0}
-  gameOver: {fileID: 0}
+  timeUI: {fileID: 0}
+  DiedSound: {fileID: 8300000, guid: eee7c5daf447f6b438369d12f594c844, type: 3}
+  WinSound: {fileID: 8300000, guid: 185950938f81ad34f894ac2eba8e4920, type: 3}
   targetGroup: {fileID: 0}

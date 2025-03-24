@@ -164,9 +164,9 @@ public class EnemySpawner : MonoBehaviour
         destroyAllEnemy();
         StopCoroutine(SpawnEnemies());
         StopCoroutine(CheckAndDespawnEnemies());
+        spawnBossCamera.SetActive(true);
         followCamera.SetActive(false);
-        Instantiate(bossPrefab, new Vector3(0, 0, 0), Quaternion.identity);
-
+        Instantiate(bossPrefab, new Vector3(0, 0, 0), Quaternion.identity);       
         bossSpawned = true;
         StartCoroutine(ReactivateCamera());
     }
@@ -180,6 +180,7 @@ public class EnemySpawner : MonoBehaviour
             bossScript.enabled = true;
         }
         followCamera.SetActive(true);
+        spawnBossCamera.SetActive(false);
     }
 
 }

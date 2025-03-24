@@ -50,7 +50,7 @@ public class SelectionController : MonoBehaviour
         {
             selectedCharacter = 0;
         }
-        changeCharacter(selectedGameObject[selectedCharacter]);  
+        changeCharacter(selectedGameObject[selectedCharacter]);
     }
 
     public void BackOption()
@@ -72,16 +72,21 @@ public class SelectionController : MonoBehaviour
         character.transform.localScale = Character.selectionScale;
         character.transform.position = Character.selectionLocation;
         currentCharacter = character;
+        Animator characterAnimator = currentCharacter.GetComponent<Animator>();
+        if (characterAnimator != null)
+        {
+            characterAnimator.Play("Idle");
+        }
         if (Character.isUnlocked)
-        {          
-            lockImage.gameObject.SetActive(false);           
+        {
+            lockImage.gameObject.SetActive(false);
             playButton.gameObject.SetActive(true);
         }
         else
         {
-            lockImage.gameObject.SetActive(true);          
+            lockImage.gameObject.SetActive(true);
             buyButtonText.text = Character.unlockCost.ToString();
-            if(playerCoins < Character.unlockCost)
+            if (playerCoins < Character.unlockCost)
             {
                 buyButton.interactable = false;
             }
@@ -103,11 +108,11 @@ public class SelectionController : MonoBehaviour
             playerCoins -= cost;
             PlayerPrefs.SetInt("PlayerCoins", playerCoins);
             PlayerPrefs.Save();
-
+            selectedGameObject[selectedCharacter].isUnlocked = true;
             PlayerPrefs.SetInt("Character_" + selectedCharacter + "_Unlocked", 1);
             PlayerPrefs.Save();
 
-            lockImage.gameObject.SetActive(false);           
+            lockImage.gameObject.SetActive(false);
             playButton.gameObject.SetActive(true);
 
             CoinDisplay();
@@ -133,9 +138,8 @@ public class SelectionController : MonoBehaviour
         string mapName = MapSellectionController.instance.mapName;
         selectedPlayer = selectedGameObject[selectedCharacter];
         SceneManager.LoadScene(mapName);
+       
     }
-
-   
 
 
 
@@ -151,7 +155,7 @@ public class SelectionController : MonoBehaviour
         for (int i = 1; i < selectedGameObject.Count; i++)
         {
             bool isUnlocked = PlayerPrefs.GetInt("Character_" + i + "_Unlocked", 0) == 1;
-            selectedGameObject[i].isUnlocked = isUnlocked;          
+            selectedGameObject[i].isUnlocked = isUnlocked;
         }
     }
 }

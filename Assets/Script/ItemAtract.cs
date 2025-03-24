@@ -6,12 +6,12 @@ public class ItemAtract : MonoBehaviour
     public float attractSpeed = 1.5f;
 
     private Transform player;
-    public AudioManager audioManager;
+    public AudioManager_PlayScreen audioManager;
     private bool Collected = false;
     private void Start()
     {
         player = FindAnyObjectByType<PlayerControl>().transform;
-        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager_PlayScreen>();
     }
 
     private void Update()
