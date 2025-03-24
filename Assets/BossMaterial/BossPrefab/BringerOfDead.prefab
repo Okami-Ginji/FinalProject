@@ -335,7 +335,7 @@ GameObject:
   - component: {fileID: -847496907190909030}
   m_Layer: 0
   m_Name: BringerOfDead
-  m_TagString: Untagged
+  m_TagString: EnemyBoss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -466,8 +466,8 @@ MonoBehaviour:
   fireballSpeed: 10
   timeBtwfire: 3
   firePos: {fileID: 58508415433047652}
-  currentHealth: 1000
-  maxHealth: 1000
+  currentHealth: 10000
+  maxHealth: 10000
   damgeForSeries: 10
   playerLayer:
     serializedVersion: 2

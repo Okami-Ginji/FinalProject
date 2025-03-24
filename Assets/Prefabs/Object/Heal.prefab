@@ -140,7 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f51c339f9bb23d409ea4c879bc58aaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healAmount: 4
+  healAmount: 5
   heal: {fileID: 3256458835383546594}
 --- !u!114 &-5578566801697376052
 MonoBehaviour:
@@ -154,8 +154,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c107b3a39a484ed48886f4cf002ee5a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attractRange: 1
-  attractSpeed: 1.5
+  attractRange: 3
+  attractSpeed: 5
   audioManager: {fileID: 0}
 --- !u!50 &2486087761757259223
 Rigidbody2D:

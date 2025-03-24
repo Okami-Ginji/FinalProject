@@ -71,5 +71,22 @@ public class OrbitingSword : MonoBehaviour
                 }
             }
         }
+        else if (collision.CompareTag("EnemyBoss"))
+        {
+
+            BossAI aIBoss = collision.GetComponent<BossAI>();
+            if (aIBoss != null)
+            {
+
+                aIBoss.getKnockback(transform.position);
+                aIBoss.ChangeHealth(-3, transform.position);
+
+                Rigidbody2D enemyRb = collision.GetComponent<Rigidbody2D>();
+                if (enemyRb != null)
+                {
+                    aIBoss.getKnockback(transform.position);
+                }
+            }
+        }
     }
 }

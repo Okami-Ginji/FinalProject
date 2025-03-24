@@ -78,7 +78,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1102595739
-  m_SortingLayer: 2
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: -7213742777133032008, guid: 8a9bcf3f639c0c64e89e0540ed15231e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -162,6 +162,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   energyObject: {fileID: 3042231078190144995}
+  expUI: {fileID: 0}
 --- !u!114 &4977169350535453651
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -174,5 +175,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c107b3a39a484ed48886f4cf002ee5a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attractRange: 1
-  attractSpeed: 1.5
+  attractRange: 3
+  attractSpeed: 5
+  audioManager: {fileID: 0}

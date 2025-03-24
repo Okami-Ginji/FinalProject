@@ -46,5 +46,14 @@ public class SkillShot : MonoBehaviour
                 aISeries.ChangeHealth(-damage, transform.position);
             }
         }
+        else if (collision.CompareTag("EnemyBoss") && !hitEnemies.Contains(collision))
+        {
+            hitEnemies.Add(collision);
+            BossAI aISeries = collision.GetComponent<BossAI>();
+            if (aISeries != null)
+            {
+                aISeries.ChangeHealth(-damage, transform.position);
+            }
+        }
     }
 }
